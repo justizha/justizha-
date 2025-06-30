@@ -21,7 +21,8 @@ export default function Music() {
   const username = 'izha112';
 
 
-  const [setLastUpdate] = useState<number>(0);
+  const [, setLastUpdate] = useState<number>(0);
+
 
   useEffect(() => {
     const fetchData = async (showLoading = true): Promise<void> => {
