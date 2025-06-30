@@ -105,18 +105,19 @@ export default function Music() {
   }
 
   return (
-    <div className=" mx-auto p-4 max-w-2xl h-fit font-mono">
+    <div className=" mx-auto p-4 max-w-2xl h-fit font-mono pt-18">
       {/* User Info Header */}
       {userInfo && (
-        <div className="bg-base-200 rounded-2xl p-6 shadow-md flex items-center max-w-xl mx-auto mb-8">
+        <div className="bg-base-200 rounded-2xl p-6 shadow-md flex items-center max-w-2xl mx-auto mb-8">
           <img
             src={userInfo.image?.[2]?.['#text'] || '/default-avatar.png'}
             alt={userInfo.name}
-            className="w-24 h-24 rounded-lg object-cover mr-6 border border-base-300"
+            className="sm:w-36 w-24 sm:h-36 h-24  rounded-lg object-cover sm:mr-8 mr-6 border border-base-300"
           />
 
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-gray-100">{userInfo.realname || userInfo.name}</h1>
+            <a href={`https://last.fm/user/${userInfo.name}`} target="_blank" className="text-2xl font-bold text-gray-100 btn-link">{userInfo.realname || userInfo.name}
+            </a>
             <p className="text-sm text-gray-400 mb-3">@{userInfo.name}</p>
 
             <ul className="flex space-x-6 text-sm text-gray-300">
@@ -132,8 +133,11 @@ export default function Music() {
                 <span className="text-lg font-semibold">{parseInt(userInfo.track_count || '0').toLocaleString()}</span>
                 <span className="text-xs uppercase tracking-wide text-gray-400">Tracks</span>
               </li>
+
             </ul>
           </div>
+
+
         </div>
 
       )}
@@ -209,6 +213,9 @@ export default function Music() {
                   <p >{track.artist.name}</p>
                   <p className="text-sm ">{parseInt(track.playcount).toLocaleString()} plays</p>
                 </div>
+                <div>
+                  <a href={`https://last.fm/music/${track.artist.name}`} className="btn btn-outline btn-error">Visit <img src="/assets/lastfm.png" alt="last Fm" className="w-4 h-4" /></a>
+                </div>
               </div>
             ))}
           </div>
@@ -228,7 +235,7 @@ export default function Music() {
                   <p className="text-sm">{parseInt(artist.playcount).toLocaleString()} plays</p>
                 </div>
                 <div className="">
-                  <a href={`https://last.fm/music/${artist.name}`} className="flex items-center gap-1 underline">Visit <img src="/assets/lastfm.png" alt="last Fm" className="w-4 h-4" /></a>
+                  <a href={`https://last.fm/music/${artist.name}`} className="btn btn-outline btn-error">Visit <img src="/assets/lastfm.png" alt="last Fm" className="w-4 h-4" /></a>
                 </div>
               </div>
             ))}
