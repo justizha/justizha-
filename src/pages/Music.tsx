@@ -105,23 +105,37 @@ export default function Music() {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-2xl max-h-fit font-mono">
+    <div className=" mx-auto p-4 max-w-2xl h-fit font-mono">
       {/* User Info Header */}
       {userInfo && (
-        <div className="mb-8 text-center">
+        <div className="bg-base-200 rounded-2xl p-6 shadow-md flex items-center max-w-xl mx-auto mb-8">
           <img
             src={userInfo.image?.[2]?.['#text'] || '/default-avatar.png'}
             alt={userInfo.name}
-            className="w-44 h-44 rounded-md mx-auto mb-4"
+            className="w-24 h-24 rounded-lg object-cover mr-6 border border-base-300"
           />
-          <h1 className="text-3xl font-bold">{userInfo.realname || userInfo.name}</h1>
-          <p >@{userInfo.name}</p>
-          <div className="flex justify-center space-x-6 mt-4 text-sm ">
-            <span>{parseInt(userInfo.playcount || '0').toLocaleString()} plays</span>
-            <span>{parseInt(userInfo.artist_count || '0').toLocaleString()} artists</span>
-            <span>{parseInt(userInfo.track_count || '0').toLocaleString()} tracks</span>
+
+          <div className="flex-1">
+            <h1 className="text-2xl font-bold text-gray-100">{userInfo.realname || userInfo.name}</h1>
+            <p className="text-sm text-gray-400 mb-3">@{userInfo.name}</p>
+
+            <ul className="flex space-x-6 text-sm text-gray-300">
+              <li className="flex flex-col items-center">
+                <span className="text-lg font-semibold">{parseInt(userInfo.playcount || '0').toLocaleString()}</span>
+                <span className="text-xs uppercase tracking-wide text-gray-400">Plays</span>
+              </li>
+              <li className="flex flex-col items-center">
+                <span className="text-lg font-semibold">{parseInt(userInfo.artist_count || '0').toLocaleString()}</span>
+                <span className="text-xs uppercase tracking-wide text-gray-400">Artists</span>
+              </li>
+              <li className="flex flex-col items-center">
+                <span className="text-lg font-semibold">{parseInt(userInfo.track_count || '0').toLocaleString()}</span>
+                <span className="text-xs uppercase tracking-wide text-gray-400">Tracks</span>
+              </li>
+            </ul>
           </div>
         </div>
+
       )}
 
       {/* Tabs */}
@@ -183,7 +197,7 @@ export default function Music() {
 
         {/* Top Tracks */}
         {activeTab === 'toptracks' && (
-          <div>
+          <div className="space-y-3">
             <h2 className="text-xl font-semibold mb-4">Top Tracks (This Month)</h2>
             {topTracks.map((track, index) => (
               <div key={`top-track-${index}`} className="flex items-center p-4 bg-base-200 rounded-lg shadow-smshadow-md">
@@ -213,8 +227,8 @@ export default function Music() {
                   <h3 className="font-medium ">{artist.name}</h3>
                   <p className="text-sm">{parseInt(artist.playcount).toLocaleString()} plays</p>
                 </div>
-                <div className="pr-2">
-                  <a href={`https://last.fm/music/${artist.name}`} className="underline text-sm flex gap-1">Visit <img src="/assets/lastfm.png" alt="last Fm" className="w-4" /></a>
+                <div className="">
+                  <a href={`https://last.fm/music/${artist.name}`} className="flex items-center gap-1 underline">Visit <img src="/assets/lastfm.png" alt="last Fm" className="w-4 h-4" /></a>
                 </div>
               </div>
             ))}

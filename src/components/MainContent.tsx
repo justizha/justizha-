@@ -1,11 +1,13 @@
 import Contact from "./Contanct"
+import Brief from "./Brief"
 import { Link } from "react-router"
 
 export default function MainContent() {
  return (
-  <section className="grid place-items-center w-full gap-4">
+  <section className=" grid place-items-center px-3 gap-3 pb-4">
    <Contact />
    <Link className="btn btn-outline btn-warning sm:w-lg w-full text-lg" to={'/music'}>Music</Link>
+   <Brief />
   </section>
  )
 }
