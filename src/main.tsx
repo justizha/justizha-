@@ -11,7 +11,7 @@ createRoot(document.getElementById('root') || document.createElement('div')).ren
       <Routes>
         <Route path='lastfm' />
         <Route index element={<App />} />
-        <Route path='/music' element={<Music />} />
+        <Route path='music' element={<Music />} />
       </Routes>
       <Footer />
     </BrowserRouter>
