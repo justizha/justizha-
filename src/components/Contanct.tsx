@@ -6,7 +6,7 @@ export default function Contact() {
      const modal = document.getElementById('mdl') as HTMLDialogElement
      if (modal) modal.showModal();
     }}
-    className="btn btn-outline btn-accent w-lg">
+    className="btn btn-outline btn-accent sm:w-lg w-full">
     <p className="text-lg">Contact</p>
    </button>
    {/* dialog */}

@@ -2,7 +2,7 @@ import MainContent from "./components/MainContent"
 
 export default function App() {
   return (
-    <main className="min-h-screen font-mono">
+    <main className="font-mono">
       <section className="hero pt-12">
         <div className="hero-content">
           <div className="sm:max-w-lg max-w-md">
