@@ -112,7 +112,7 @@ export default function Music() {
           <img
             src={userInfo.image?.[2]?.['#text'] || '/default-avatar.png'}
             alt={userInfo.name}
-            className="w-20 h-20 rounded-full mx-auto mb-4"
+            className="w-44 h-44 rounded-md mx-auto mb-4"
           />
           <h1 className="text-3xl font-bold">{userInfo.realname || userInfo.name}</h1>
           <p >@{userInfo.name}</p>
@@ -190,11 +190,6 @@ export default function Music() {
                 <div className="w-8 h-8 flex items-center justify-center bg-base-300 rounded-full mr-4 text-sm font-medium">
                   {index + 1}
                 </div>
-                <img
-                  src={track.image?.[1]?.['#text'] || '/default-track.png'}
-                  alt={track.name}
-                  className="w-12 h-12 rounded-md mr-4"
-                />
                 <div className="flex-1">
                   <h3 className="font-medium ">{track.name}</h3>
                   <p >{track.artist.name}</p>
@@ -219,7 +214,7 @@ export default function Music() {
                   <p className="text-sm">{parseInt(artist.playcount).toLocaleString()} plays</p>
                 </div>
                 <div>
-                  <a href={`https://last.fm/music/${artist.name}`}></a>
+                  <a href={`https://last.fm/music/${artist.name}`} className="underline text-sm">Visit <img src="/assets/lastfm.png" alt="last Fm" /></a>
                 </div>
               </div>
             ))}
