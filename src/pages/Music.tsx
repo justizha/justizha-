@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import CatGif from "../components/CatGif";
 import { getRecentTracks, getUserInfo, getTopTracks, getTopArtists } from '../service/lastfm';
 import type {
   LastFmTrack,
@@ -22,8 +23,6 @@ export default function Music() {
 
 
   const [, setLastUpdate] = useState<number>(0);
-
-
   useEffect(() => {
     const fetchData = async (showLoading = true): Promise<void> => {
       try {
@@ -71,11 +70,16 @@ export default function Music() {
       }
     };
 
-    fetchData();
+    const timer = setTimeout(() => {
+      fetchData(true);
+    }, 3000);
 
     const interval = setInterval(() => fetchData(false), 30000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, [username]);
 
   if (loading) {
@@ -83,7 +87,7 @@ export default function Music() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8shadow-md-b-2shadow-md-gray-900 mx-auto"></div>
-          <p className="mt-4">Loading Last.fm data...</p>
+          <CatGif />
         </div>
       </div>
     );
@@ -159,11 +163,6 @@ export default function Music() {
             <h2 className="text-xl font-semibold mb-4">Recent Tracks</h2>
             {recentTracks.map((track, index) => (
               <div key={`recent-${index}`} className="flex items-center p-4 bg-base-200 rounded-lg shadow-md">
-                <img
-                  src={track.image?.[1]?.['#text'] || '/default-track.png'}
-                  alt={track.name}
-                  className="w-12 h-12 rounded-md mr-4"
-                />
                 <div className="flex-1">
                   <h3 className="font-medium">{track.name}</h3>
                   <p >{track.artist['#text']}</p>
@@ -215,14 +214,12 @@ export default function Music() {
                 <div className="w-8 h-8 flex items-center justify-center bg-base-300 rounded-full mr-4 text-sm font-medium">
                   {index + 1}
                 </div>
-                <img
-                  src={artist.image?.[1]?.['#text'] || '/default-artist.png'}
-                  alt={artist.name}
-                  className="w-12 h-12 rounded-md mr-4"
-                />
                 <div className="flex-1">
                   <h3 className="font-medium ">{artist.name}</h3>
                   <p className="text-sm">{parseInt(artist.playcount).toLocaleString()} plays</p>
+                </div>
+                <div>
+                  <a href={`https://last.fm/music/${artist.name}`}></a>
                 </div>
               </div>
             ))}
