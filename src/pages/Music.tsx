@@ -214,7 +214,7 @@ export default function Music() {
                   <p className="text-sm">{parseInt(artist.playcount).toLocaleString()} plays</p>
                 </div>
                 <div>
-                  <a href={`https://last.fm/music/${artist.name}`} className="underline text-sm">Visit <img src="/assets/lastfm.png" alt="last Fm" /></a>
+                  <a href={`https://last.fm/music/${artist.name}`} className="underline text-sm">Visit <img src="/assets/lastfm.png" alt="last Fm" className="w-6"/></a>
                 </div>
               </div>
             ))}
