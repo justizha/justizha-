@@ -7,7 +7,7 @@ import type {
  LastFmUserResponse,
  LastFmTopTracksResponse,
  LastFmTopArtistsResponse
-} from '../type/lastfm';
+} from '../types/lastfm';
 
 
 export const getRecentTracks = async (
