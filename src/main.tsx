@@ -4,12 +4,13 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import App from './App.tsx'
 import Footer from './components/Footer.tsx'
 import Music from './pages/Music.tsx'
+import Page from './pages/Page.tsx'
 
 createRoot(document.getElementById('root') || document.createElement('div')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='lastfm' />
+        <Route path='lastfm' element={<Page />} />
         <Route index element={<App />} />
         <Route path='music' element={<Music />} />
       </Routes>
