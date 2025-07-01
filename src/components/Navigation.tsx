@@ -2,18 +2,20 @@ import { Link } from "react-router"
 
 export default function Nav() {
  return (
-  <aside className="p-4">
-   <nav className="p-2">
-    <ul className="flex gap-2 items-center">
-     <li className="">
-      <Link to={'/'} className="btn btn-success btn-link">Home</Link>
+  <header className="flex justify-center mt-4">
+   <nav >
+    <ul className="flex gap-2 items-center font-mono">
+     <li>
+      <Link to={'/blogs'} className="btn text-lg btn-link text-teal-400">Blogs</Link>
      </li>
      <li>
-      <Link to={'/'}>H</Link>
+      <Link to={'/music'} className="btn text-lg btn-link text-teal-400">Music</Link>
      </li>
-     <li></li>
+     <li >
+      <Link to={'/'} className="btn text-lg btn-link text-teal-400">Home</Link>
+     </li>
     </ul>
-   </nav>
-  </aside>
+   </ nav>
+  </header >
  )
 }
