@@ -9,6 +9,8 @@ export default function App() {
             <h1 className="sm:text-5xl text-4xl font-black">Hi there!</h1>
             <p className="py-5 sm:text-lg text-[16px]">
               I'm Izha, and I'm so glad you stopped by my little corner of the internet. Want to get in touch? Just hit that contact button!
+              <br />
+              <span className="text-gray-400">(Or you can just look around)</span>
             </p>
           </div>
         </div>

@@ -2,11 +2,11 @@ import { Link } from "react-router"
 
 export default function Nav() {
  return (
-  <aside className="rounded-lg border border-success p-3 py-2 absolute z-20 top-10 sm:left-80 left-2 ">
+  <aside className="p-4">
    <nav className="p-2">
-    <ul>
-     <li className="hover:scale-200 duration-200">
-      <Link to={'/'} >H</Link>
+    <ul className="flex gap-2 items-center">
+     <li className="">
+      <Link to={'/'} className="btn btn-success btn-link">Home</Link>
      </li>
      <li>
       <Link to={'/'}>H</Link>

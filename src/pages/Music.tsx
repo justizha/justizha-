@@ -105,7 +105,7 @@ export default function Music() {
   }
 
   return (
-    <div className=" mx-auto p-4 max-w-2xl h-fit font-mono py-36">
+    <div className=" mx-auto p-4 max-w-2xl h-fit font-mono py-24">
       {/* User Info Header */}
       {userInfo && (
         <div className="bg-base-200 rounded-2xl p-6 shadow-md flex items-center max-w-2xl mx-auto mb-8">
@@ -174,7 +174,7 @@ export default function Music() {
       </div>
 
       {/* Content */}
-      <section className="h-96 overflow-y-auto">
+      <section className="h-[26rem] overflow-y-auto">
         {/* Recent Tracks */}
         {activeTab === 'recent' && (
           <div className="space-y-3">
