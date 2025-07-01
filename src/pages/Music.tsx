@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import Nav from "../components/Navigation";
-import CatGif from "../components/CatGif";
 import { getRecentTracks, getUserInfo, getTopTracks, getTopArtists } from '../service/lastfm';
 import type {
   LastFmTrack,
@@ -88,7 +87,7 @@ export default function Music() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8shadow-md-b-2shadow-md-gray-900 mx-auto"></div>
-          <CatGif />
+          <img src="/assets/rollingcar.gif" alt="cat" className='w-20' />
         </div>
       </div>
     );
