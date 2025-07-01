@@ -65,7 +65,7 @@ export default function Contact() {
                   href={'https://twitter.com/ThisIzha'}
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="btn w-full bg-white text-[16px]">
+                  className="btn w-full bg-white text-[16px] text-black">
                   <img src="/assets/twitter.svg" alt="twitter" className="w-6" />
                   Twitter
                 </a>
