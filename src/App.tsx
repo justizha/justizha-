@@ -10,7 +10,9 @@ export default function App() {
             <p className="py-5 sm:text-lg text-[16px]">
               I'm Izha, and I'm so glad you stopped by my little corner of the internet. Want to get in touch? Just hit that contact button!
               <br />
-              <span className="text-gray-400">(Or you can just look around)</span>
+              <span className="text-gray-400 text-sm">
+                (Or you can just freely look around)
+              </span>
             </p>
           </div>
         </div>
