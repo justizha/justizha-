@@ -6,7 +6,7 @@ export default function Nav() {
    <nav >
     <ul className="flex gap-2 items-center font-mono">
      <li>
-      <Link to={'/blogs'} className="btn text-lg btn-link text-teal-400">Blogs</Link>
+      <Link to={'/blog'} className="btn text-lg btn-link text-teal-400">Blogs</Link>
      </li>
      <li>
       <Link to={'/music'} className="btn text-lg btn-link text-teal-400">Music</Link>

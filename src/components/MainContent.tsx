@@ -13,7 +13,7 @@ export default function MainContent() {
    </Link>
    <Link
     className="btn btn-outline btn-info sm:w-lg w-full text-lg"
-    to={'/blogs'}>
+    to={'/blog'}>
     Blogs
    </Link>
    <Brief />

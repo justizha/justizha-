@@ -5,19 +5,25 @@ import App from './App.tsx'
 import Footer from './components/Footer.tsx'
 import Music from './pages/Music.tsx'
 import Page from './pages/Page.tsx'
-// import Nav from './components/Navigation.tsx'
 import Blogs from './pages/Blogs.tsx'
+import Simplicity from './pages/blogs/Simplicity.tsx'
+
 
 createRoot(document.getElementById('root') || document.createElement('div')).render(
   <StrictMode>
     <BrowserRouter>
-      {/* <Nav /> */}
+
       <Routes>
         <Route path='lastfm' element={<Page />} />
         <Route index element={<App />} />
-        <Route path='blogs' element={<Blogs />} />
         <Route path='music' element={<Music />} />
+
+        <Route path='blog'>
+          <Route index element={<Blogs />} />
+          <Route path='simplicity' element={<Simplicity />} />
+        </Route>
       </Routes>
+
       <Footer />
     </BrowserRouter>
   </StrictMode>
