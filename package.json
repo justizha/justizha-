@@ -12,6 +12,7 @@
   "dependencies": {
     "@netlify/functions": "^4.1.8",
     "@tailwindcss/vite": "^4.1.11",
+    "@uiw/react-md-editor": "^4.0.7",
     "biome": "^0.3.3",
     "daisyui": "^5.0.43",
     "marked": "^16.0.0",

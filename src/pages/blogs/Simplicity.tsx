@@ -1,6 +1,6 @@
-import { marked } from "marked";
 import ContentMarkDown from "./markdown/Simplicity.md?raw";
 import { Link } from "react-router";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function Simplicity() {
   return (
@@ -10,9 +10,13 @@ export default function Simplicity() {
           <Link to={"/blog"} className="btn btn-soft">
             ← Back
           </Link>
-          <article className="prose">
-            <div
-              dangerouslySetInnerHTML={{ __html: marked(ContentMarkDown) }}
+          <article className="prose mt-5">
+            <MDEditor.Markdown
+              source={ContentMarkDown}
+              style={{
+                backgroundColor: "transparent",
+                fontFamily: "monospace",
+              }}
             />
           </article>
         </div>
