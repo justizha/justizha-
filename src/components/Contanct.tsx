@@ -2,6 +2,7 @@ export default function Contact() {
   return (
     <>
       <button
+        type="button"
         onClick={() => {
           const modal = document.getElementById("mdl") as HTMLDialogElement;
           if (modal) modal.showModal();
@@ -14,7 +15,10 @@ export default function Contact() {
       <dialog id="mdl" className="modal">
         <div className="modal-box">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              type="button"
+            >
               ✕
             </button>
           </form>

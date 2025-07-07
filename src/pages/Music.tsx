@@ -23,14 +23,13 @@ export default function Music() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>("recent");
 
-  const username = "izha112";
-
   const [, setLastUpdate] = useState<number>(0);
+
+  const username = "izha112";
   useEffect(() => {
     const fetchData = async (showLoading = true): Promise<void> => {
       try {
         if (showLoading) setLoading(true);
-
         const [recentData, topTracksData, topArtistsData, userData] =
           await Promise.all([
             getRecentTracks(username, 10),
@@ -39,33 +38,20 @@ export default function Music() {
             getUserInfo(username),
           ]);
 
-        const newDataHash = JSON.stringify({
-          recent: recentData.recenttracks?.track?.[0]?.date?.uts,
-          topTracks: topTracksData.toptracks?.track?.[0]?.playcount,
-          topArtists: topArtistsData.topartists?.artist?.[0]?.playcount,
-        });
-
-        const currentHash = JSON.stringify({
-          recent: recentTracks[0]?.date?.uts,
-          topTracks: topTracks[0]?.playcount,
-          topArtists: topArtists[0]?.playcount,
-        });
-
-        if (newDataHash !== currentHash) {
-          if (recentData.recenttracks) {
-            setRecentTracks(recentData.recenttracks.track || []);
-          }
-          if (topTracksData.toptracks) {
-            setTopTracks(topTracksData.toptracks.track || []);
-          }
-          if (topArtistsData.topartists) {
-            setTopArtists(topArtistsData.topartists.artist || []);
-          }
-          if (userData.user) {
-            setUserInfo(userData.user);
-          }
-          setLastUpdate(Date.now());
+        // Always update the data
+        if (recentData.recenttracks) {
+          setRecentTracks(recentData.recenttracks.track || []);
         }
+        if (topTracksData.toptracks) {
+          setTopTracks(topTracksData.toptracks.track || []);
+        }
+        if (topArtistsData.topartists) {
+          setTopArtists(topArtistsData.topartists.artist || []);
+        }
+        if (userData.user) {
+          setUserInfo(userData.user);
+        }
+        setLastUpdate(Date.now());
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "An unknown error occurred";
@@ -78,20 +64,19 @@ export default function Music() {
     const timer = setTimeout(() => {
       fetchData(true);
     }, 3000);
-
     const interval = setInterval(() => fetchData(false), 30000);
 
     return () => {
       clearTimeout(timer);
       clearInterval(interval);
     };
-  }, [username]);
+  }, []);
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8shadow-md-b-2shadow-md-gray-900 mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8shadow-md-b-2shadow-md-gray-900 mx-auto" />
           <img src="/assets/rollingcar.gif" alt="cat" className="w-20" />
         </div>
       </div>
@@ -127,6 +112,7 @@ export default function Music() {
                 href={`https://last.fm/user/${userInfo.name}`}
                 target="_blank"
                 className="text-2xl font-bold text-gray-100 btn-link"
+                rel="noreferrer"
               >
                 {userInfo.realname || userInfo.name}
               </a>
@@ -135,7 +121,9 @@ export default function Music() {
               <ul className="flex space-x-6 text-sm text-gray-300">
                 <li className="flex flex-col items-center">
                   <span className="text-lg font-semibold">
-                    {parseInt(userInfo.playcount || "0").toLocaleString()}
+                    {Number.parseInt(
+                      userInfo.playcount || "0"
+                    ).toLocaleString()}
                   </span>
                   <span className="text-xs uppercase tracking-wide text-gray-400">
                     Plays
@@ -143,7 +131,9 @@ export default function Music() {
                 </li>
                 <li className="flex flex-col items-center">
                   <span className="text-lg font-semibold">
-                    {parseInt(userInfo.artist_count || "0").toLocaleString()}
+                    {Number.parseInt(
+                      userInfo.artist_count || "0"
+                    ).toLocaleString()}
                   </span>
                   <span className="text-xs uppercase tracking-wide text-gray-400">
                     Artists
@@ -151,7 +141,9 @@ export default function Music() {
                 </li>
                 <li className="flex flex-col items-center">
                   <span className="text-lg font-semibold">
-                    {parseInt(userInfo.track_count || "0").toLocaleString()}
+                    {Number.parseInt(
+                      userInfo.track_count || "0"
+                    ).toLocaleString()}
                   </span>
                   <span className="text-xs uppercase tracking-wide text-gray-400">
                     Tracks
@@ -165,6 +157,7 @@ export default function Music() {
         {/* Tabs */}
         <div className="flex space-x-1 mb-6 bg-base-200 p-1 rounded-lg">
           <button
+            type="button"
             onClick={() => setActiveTab("recent")}
             className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors ${
               activeTab === "recent"
@@ -175,6 +168,7 @@ export default function Music() {
             Recent Tracks
           </button>
           <button
+            type="button"
             onClick={() => setActiveTab("toptracks")}
             className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors ${
               activeTab === "toptracks"
@@ -185,6 +179,7 @@ export default function Music() {
             Top Tracks
           </button>
           <button
+            type="button"
             onClick={() => setActiveTab("topartists")}
             className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors ${
               activeTab === "topartists"
@@ -204,19 +199,22 @@ export default function Music() {
               <h2 className="text-xl font-semibold mb-4">Recent Tracks</h2>
               {recentTracks.map((track, index) => (
                 <div
-                  key={`recent-${index}`}
+                  key={`recent-${
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    index
+                  }`}
                   className="flex items-center p-4 bg-base-200 rounded-lg shadow-md"
                 >
                   <div className="flex-1">
                     <h3 className="font-medium">{track.name}</h3>
                     <p>{track.artist["#text"]}</p>
-                    {track.album && track.album["#text"] && (
+                    {track.album?.["#text"] && (
                       <p className="text-sm">{track.album["#text"]}</p>
                     )}
                   </div>
-                  {track["@attr"] && track["@attr"].nowplaying && (
+                  {track["@attr"]?.nowplaying && (
                     <div className="flex items-center text-green-600">
-                      <div className="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse"></div>
+                      <div className="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse" />
                       <span className="text-sm">Now Playing</span>
                     </div>
                   )}
@@ -233,7 +231,10 @@ export default function Music() {
               </h2>
               {topTracks.map((track, index) => (
                 <div
-                  key={`top-track-${index}`}
+                  key={`top-track-${
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    index
+                  }`}
                   className="flex items-center p-4 bg-base-200 rounded-lg shadow-smshadow-md"
                 >
                   <div className="w-8 h-8 flex items-center justify-center bg-base-300 rounded-full mr-4 text-sm font-medium">
@@ -243,7 +244,7 @@ export default function Music() {
                     <h3 className="font-medium ">{track.name}</h3>
                     <p>{track.artist.name}</p>
                     <p className="text-sm ">
-                      {parseInt(track.playcount).toLocaleString()} plays
+                      {Number.parseInt(track.playcount).toLocaleString()} plays
                     </p>
                   </div>
                   <div>
@@ -272,7 +273,10 @@ export default function Music() {
               </h2>
               {topArtists.map((artist, index) => (
                 <div
-                  key={`top-artist-${index}`}
+                  key={`top-artist-${
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    index
+                  }`}
                   className="flex items-center p-4 bg-base-200 rounded-lg shadow-smshadow-md"
                 >
                   <div className="w-8 h-8 flex items-center justify-center bg-base-300 rounded-full mr-4 text-sm font-medium">
@@ -281,7 +285,7 @@ export default function Music() {
                   <div className="flex-1">
                     <h3 className="font-medium ">{artist.name}</h3>
                     <p className="text-sm">
-                      {parseInt(artist.playcount).toLocaleString()} plays
+                      {Number.parseInt(artist.playcount).toLocaleString()} plays
                     </p>
                   </div>
                   <div className="">
