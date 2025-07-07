@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Nav from "../components/Navigation";
+import moment from "moment";
 import {
   getRecentTracks,
   getUserInfo,
@@ -207,16 +208,20 @@ export default function Music() {
                 >
                   <div className="flex-1">
                     <h3 className="font-medium">{track.name}</h3>
-                    <p>{track.artist["#text"]}</p>
+                    <p className="text-sm">by {track.artist["#text"]}</p>
                     {track.album?.["#text"] && (
-                      <p className="text-sm">{track.album["#text"]}</p>
+                      <p className="text-sm"> {track.album["#text"]}</p>
                     )}
                   </div>
-                  {track["@attr"]?.nowplaying && (
+                  {track["@attr"]?.nowplaying ? (
                     <div className="flex items-center text-green-600">
                       <div className="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse" />
                       <span className="text-sm">Now Playing</span>
                     </div>
+                  ) : (
+                    <p className="text-sm">
+                      {moment(Number(track.date?.uts) * 1000).fromNow()}
+                    </p>
                   )}
                 </div>
               ))}
