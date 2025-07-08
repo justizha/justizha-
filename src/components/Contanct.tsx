@@ -15,10 +15,8 @@ export default function Contact() {
       <dialog id="mdl" className="modal">
         <div className="modal-box">
           <form method="dialog">
-            <button
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              type="button"
-            >
+            {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
             </button>
           </form>
