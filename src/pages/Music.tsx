@@ -101,7 +101,7 @@ export default function Music() {
       <div className="mx-auto p-4 max-w-2xl h-fit font-mono pb-16">
         {/* User Info Header */}
         {userInfo && (
-          <div className="bg-base-300/60 rounded p-6 shadow-md outline-teal-700 outline flex items-center max-w-2xl mx-auto mb-5">
+          <div className="bg-base-300/60 rounded p-6 shadow-md outline-teal-900 outline flex items-center max-w-2xl mx-auto mb-5">
             <img
               src={userInfo.image?.[2]?.["#text"] || "/default-avatar.png"}
               alt={userInfo.name}
@@ -156,14 +156,14 @@ export default function Music() {
         )}
 
         {/* Tabs */}
-        <div className="flex space-x-1 mb-4 bg-base-200 p-2 rounded border border-teal-700">
+        <div className="flex space-x-1 mb-4 bg-base-200 p-2 rounded border border-teal-900">
           <button
             type="button"
             onClick={() => setActiveTab("recent")}
             className={`flex-1 py-2 px-4 text-sm font-medium shadow rounded duration-500 
               transition-colors ${
                 activeTab === "recent"
-                  ? "bg-base-100 text-gray-200 border border-teal-600"
+                  ? "bg-base-100 text-gray-200 border border-teal-700"
                   : "text-gray-300 hover:text-gray-200"
               }`}
           >
@@ -174,7 +174,7 @@ export default function Music() {
             onClick={() => setActiveTab("toptracks")}
             className={`flex-1 py-2 px-4 text-sm font-medium shadow rounded duration-500 transition-colors  ${
               activeTab === "toptracks"
-                ? "bg-base-100 text-gray-300 border border-teal-600"
+                ? "bg-base-100 text-gray-300 border border-teal-700"
                 : "text-gray-300 hover:text-gray-200"
             }`}
           >
@@ -185,7 +185,7 @@ export default function Music() {
             onClick={() => setActiveTab("topartists")}
             className={`flex-1 py-2 px-4 text-sm font-medium shadow rounded duration-500 transition-colors ${
               activeTab === "topartists"
-                ? "bg-base-100 text-gray-200 shadow-sm border border-teal-600  "
+                ? "bg-base-100 text-gray-200 shadow-sm border border-teal-700  "
                 : "text-gray-300 hover:text-gray-200"
             }`}
           >
@@ -197,8 +197,8 @@ export default function Music() {
         <section className="h-[26rem] overflow-y-auto">
           {/* Recent Tracks */}
           {activeTab === "recent" && (
-            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-700">
-              <h2 className="text-xl font-semibold">Recent Tracks</h2>
+            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-900">
+              <h2 className="text-xl font-semibold px-4">Recent Tracks</h2>
               {recentTracks.map((track, index) => (
                 <div
                   key={`recent-${
@@ -208,11 +208,16 @@ export default function Music() {
                   className={`flex items-center p-4 bg-base-200 shadow-md
                     ${index <= 9 ? ` border-b border-teal-900` : ``}`}
                 >
+                  <div className="w-8 h-9 flex items-center justify-center bg-base-100 rounded-lg mr-4 text-sm font-medium">
+                    {index + 1}
+                  </div>
                   <div className="flex-1">
                     <h3 className="font-medium">{track.name}</h3>
                     <p className="text-sm">by {track.artist["#text"]}</p>
                     {track.album?.["#text"] && (
-                      <p className="text-sm"> {track.album["#text"]}</p>
+                      <p className="text-sm truncate max-w-[15rem]">
+                        {track.album["#text"]}
+                      </p>
                     )}
                   </div>
                   {track["@attr"]?.nowplaying ? (
@@ -232,8 +237,8 @@ export default function Music() {
 
           {/* Top Tracks */}
           {activeTab === "toptracks" && (
-            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-700">
-              <h2 className="text-xl font-semibold mb-4">
+            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-900">
+              <h2 className="text-xl font-semibold mb-4 px-4">
                 Top Tracks (This Month)
               </h2>
               {topTracks.map((track, index) => (
@@ -275,8 +280,8 @@ export default function Music() {
 
           {/* Top Artists */}
           {activeTab === "topartists" && (
-            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-700">
-              <h2 className="text-xl font-semibold mb-4">
+            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-900">
+              <h2 className="text-xl font-semibold mb-4 px-4">
                 Top Artists (This Month)
               </h2>
               {topArtists.map((artist, index) => (
