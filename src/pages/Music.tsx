@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import Nav from "../components/Navigation";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import Nav from "../components/Navigation";
 import {
   getRecentTracks,
-  getUserInfo,
-  getTopTracks,
   getTopArtists,
+  getTopTracks,
+  getUserInfo,
 } from "../service/lastfm";
 import type {
-  LastFmTrack,
-  LastFmTopTrack,
   LastFmArtistDetailed,
+  LastFmTopTrack,
+  LastFmTrack,
   LastFmUser,
 } from "../types/lastfm";
 
@@ -101,7 +101,7 @@ export default function Music() {
       <div className="mx-auto p-4 max-w-2xl h-fit font-mono pb-16">
         {/* User Info Header */}
         {userInfo && (
-          <div className="bg-base-200 rounded-2xl p-6 shadow-md flex items-center max-w-2xl mx-auto mb-8">
+          <div className="bg-base-300/60 rounded p-6 shadow-md outline-teal-700 outline flex items-center max-w-2xl mx-auto mb-5">
             <img
               src={userInfo.image?.[2]?.["#text"] || "/default-avatar.png"}
               alt={userInfo.name}
@@ -156,24 +156,25 @@ export default function Music() {
         )}
 
         {/* Tabs */}
-        <div className="flex space-x-1 mb-6 bg-base-200 p-1 rounded-lg">
+        <div className="flex space-x-1 mb-4 bg-base-200 p-2 rounded border border-teal-700">
           <button
             type="button"
             onClick={() => setActiveTab("recent")}
-            className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors ${
-              activeTab === "recent"
-                ? "bg-base-100 text-gray-200 shadow-sm"
-                : "text-gray-300 hover:text-gray-200"
-            }`}
+            className={`flex-1 py-2 px-4 text-sm font-medium shadow rounded duration-500 
+              transition-colors ${
+                activeTab === "recent"
+                  ? "bg-base-100 text-gray-200 border border-teal-600"
+                  : "text-gray-300 hover:text-gray-200"
+              }`}
           >
             Recent Tracks
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("toptracks")}
-            className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors ${
+            className={`flex-1 py-2 px-4 text-sm font-medium shadow rounded duration-500 transition-colors  ${
               activeTab === "toptracks"
-                ? "bg-base-100 text-gray-300 shadow-sm"
+                ? "bg-base-100 text-gray-300 border border-teal-600"
                 : "text-gray-300 hover:text-gray-200"
             }`}
           >
@@ -182,9 +183,9 @@ export default function Music() {
           <button
             type="button"
             onClick={() => setActiveTab("topartists")}
-            className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors ${
+            className={`flex-1 py-2 px-4 text-sm font-medium shadow rounded duration-500 transition-colors ${
               activeTab === "topartists"
-                ? "bg-base-100 text-gray-200 shadow-sm"
+                ? "bg-base-100 text-gray-200 shadow-sm border border-teal-600  "
                 : "text-gray-300 hover:text-gray-200"
             }`}
           >
@@ -196,15 +197,16 @@ export default function Music() {
         <section className="h-[26rem] overflow-y-auto">
           {/* Recent Tracks */}
           {activeTab === "recent" && (
-            <div className="space-y-3">
-              <h2 className="text-xl font-semibold mb-4">Recent Tracks</h2>
+            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-700">
+              <h2 className="text-xl font-semibold">Recent Tracks</h2>
               {recentTracks.map((track, index) => (
                 <div
                   key={`recent-${
-                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <>
                     index
                   }`}
-                  className="flex items-center p-4 bg-base-200 rounded-lg shadow-md"
+                  className={`flex items-center p-4 bg-base-200 shadow-md
+                    ${index <= 9 ? ` border-b border-teal-900` : ``}`}
                 >
                   <div className="flex-1">
                     <h3 className="font-medium">{track.name}</h3>
@@ -230,19 +232,20 @@ export default function Music() {
 
           {/* Top Tracks */}
           {activeTab === "toptracks" && (
-            <div className="space-y-3">
+            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-700">
               <h2 className="text-xl font-semibold mb-4">
                 Top Tracks (This Month)
               </h2>
               {topTracks.map((track, index) => (
                 <div
                   key={`top-track-${
-                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <>
                     index
                   }`}
-                  className="flex items-center p-4 bg-base-200 rounded-lg shadow-smshadow-md"
+                  className={`flex items-center p-4 bg-base-200 shadow-md
+                    ${index <= 9 ? ` border-b border-teal-900` : ``}`}
                 >
-                  <div className="w-8 h-8 flex items-center justify-center bg-base-300 rounded-full mr-4 text-sm font-medium">
+                  <div className="w-8 h-9 flex items-center justify-center bg-base-100 rounded-lg mr-4 text-sm font-medium">
                     {index + 1}
                   </div>
                   <div className="flex-1">
@@ -272,23 +275,24 @@ export default function Music() {
 
           {/* Top Artists */}
           {activeTab === "topartists" && (
-            <div className="space-y-3">
+            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-700">
               <h2 className="text-xl font-semibold mb-4">
                 Top Artists (This Month)
               </h2>
               {topArtists.map((artist, index) => (
                 <div
                   key={`top-artist-${
-                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <>
                     index
                   }`}
-                  className="flex items-center p-4 bg-base-200 rounded-lg shadow-smshadow-md"
+                  className={`flex items-center p-4 bg-base-200 shadow-md
+                    ${index <= 9 ? ` border-b border-teal-900` : ``}`}
                 >
-                  <div className="w-8 h-8 flex items-center justify-center bg-base-300 rounded-full mr-4 text-sm font-medium">
+                  <div className="w-8 h-9 flex items-center justify-center bg-base-100 rounded-lg mr-4 text-sm font-medium">
                     {index + 1}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-medium ">{artist.name}</h3>
+                    <h3 className="font-semibold">{artist.name}</h3>
                     <p className="text-sm">
                       {Number.parseInt(artist.playcount).toLocaleString()} plays
                     </p>

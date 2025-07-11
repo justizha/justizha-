@@ -1,6 +1,6 @@
-import Contact from "./Contanct";
-import Brief from "./Brief";
 import { Link } from "react-router";
+import Brief from "./Brief";
+import Contact from "./Contanct";
 
 export default function MainContent() {
   return (
