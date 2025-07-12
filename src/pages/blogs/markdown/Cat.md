@@ -1,7 +1,7 @@
 # Cat.
 
 <div align="center">
-  <img src="https://github.com/justizha/random_images/blob/main/cat.jpg?raw=true" alt="cat" width="450">
+  <img src="https://github.com/justizha/random_images/blob/main/cat.jpg?raw=true" alt="cat" width="450" loading="lazy">
 </div>
 
 Meow, meow, meow, meow~
