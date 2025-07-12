@@ -4,10 +4,10 @@ import Contact from "./Contanct";
 
 export default function MainContent() {
   return (
-    <section className="grid place-items-center px-16 gap-3 pb-4">
+    <section className="grid place-items-center px-8 gap-3 pb-4">
       <Contact />
       <Link
-        className="btn btn-outline btn-accent sm:w-lg w-full text-lg"
+        className="btn btn-outline btn-accent  sm:w-lg w-full text-lg"
         to={"/music"}
       >
         Music
