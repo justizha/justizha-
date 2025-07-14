@@ -212,10 +212,12 @@ export default function Music() {
                     {index + 1}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-medium">{track.name}</h3>
+                    <h3 className="font-medium  truncate max-w-[14rem]">
+                      {track.name}
+                    </h3>
                     <p className="text-sm">by {track.artist["#text"]}</p>
                     {track.album?.["#text"] && (
-                      <p className="text-sm truncate max-w-[15rem]">
+                      <p className="text-sm truncate max-w-[14rem]">
                         {track.album["#text"]}
                       </p>
                     )}

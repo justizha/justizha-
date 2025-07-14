@@ -26,7 +26,6 @@ createRoot(
           <Route path="cat" element={<Cat />} />
         </Route>
       </Routes>
-
       <Footer />
     </BrowserRouter>
   </StrictMode>
