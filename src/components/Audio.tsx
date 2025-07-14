@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Audio() {
   const Tracks = [
-    { name: "Hip Shop (Luke Pikeman)", path: "/public/audio/hipshop.mp3" },
-    { name: "Hotel (Luke Pikeman)", path: "/public/audio/hotel.mp3" },
+    { name: "Hip Shop (Luke Pikeman)", path: "/audio/hipshop.mp3" },
+    { name: "Hotel (Luke Pikeman)", path: "/audio/hotel.mp3" },
   ];
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -47,25 +47,29 @@ export default function Audio() {
 
   return (
     <>
-      <div className="flex justify-center items-center  rounded bg-base-100">
+      <div className="flex justify-center items-center  rounded-[2px] bg-base-100">
         <button
           onClick={() =>
             setCurrentTrackIndex(
               (prev) => (prev - 1 + Tracks.length) % Tracks.length
             )
           }
-          className="px-2 py-1  bg-opacity-20   border-r mr-1"
+          className="px-2 py-1  bg-opacity-20   border-r mr-1 border-gray-600"
         >
           ⏮
         </button>
-
-        <p className="text-sm ">{Tracks[currentTrackIndex].name}</p>
+        <img
+          src="/assets/music_notes.gif"
+          className="w-14  brightness-0 invert absolute -top-20 right-10"
+          alt=""
+        />
+        <p className="text-sm mx-1">{Tracks[currentTrackIndex].name}</p>
 
         <button
           onClick={() =>
             setCurrentTrackIndex((prev) => (prev + 1) % Tracks.length)
           }
-          className="px-2 py-1  bg-opacity-20 border-l ml-1"
+          className="px-2 py-1  bg-opacity-20 border-l ml-1 border-gray-600"
         >
           ⏭
         </button>
