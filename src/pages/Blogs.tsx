@@ -5,7 +5,7 @@ export default function Blogs() {
   return (
     <>
       <Nav />
-      <section className="hero font-mono py-24">
+      <section className="hero  py-24">
         <div className="hero-content flex-col">
           <div className="mb-4">
             <h1 className="text-xl text-center">Blog Posts.</h1>

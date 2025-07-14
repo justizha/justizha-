@@ -2,8 +2,8 @@ import MainContent from "./components/MainContent";
 
 export default function App() {
   return (
-    <main className="font-mono">
-      <section className="hero pt-12 px-4">
+    <main>
+      <section className="hero px-4">
         <div className="hero-content">
           <div className="sm:max-w-lg max-w-md">
             <h1 className="sm:text-5xl text-4xl font-black">Hi there!</h1>

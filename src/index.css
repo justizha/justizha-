@@ -1,6 +1,12 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@import url('https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+@theme {
+    --font-cascadia : "Cascadia Code", monospace
+}
+
 @plugin "@tailwindcss/typography";
+@plugin "daisyui";
 @plugin "daisyui/theme" {
  name: "dark";
  default: false;
@@ -34,4 +40,8 @@
  --border: 1px;
  --depth: 1;
  --noise: 1;
+
+ 
 }
+
+

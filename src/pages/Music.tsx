@@ -98,7 +98,7 @@ export default function Music() {
   return (
     <>
       <Nav />
-      <div className="mx-auto p-4 max-w-2xl h-fit font-mono pb-16">
+      <div className="mx-auto p-4 max-w-2xl h-fit pb-16">
         {/* User Info Header */}
         {userInfo && (
           <div className="bg-base-300/60 rounded p-6 shadow-md outline-teal-900 outline flex items-center max-w-2xl mx-auto mb-5">
