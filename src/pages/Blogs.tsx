@@ -5,10 +5,11 @@ export default function Blogs() {
   return (
     <>
       <Nav />
-      <section className="hero  py-24">
+      <section className="hero  py-8">
         <div className="hero-content flex-col">
-          <div className="mb-4">
-            <h1 className="text-xl text-center">Blog Posts.</h1>
+          <div>
+            <h1 className="text-2xl text-center mb-2">Blog Posts.</h1>
+            <img src="assets/cat_typing.gif" className="w-36" alt="me fr" />
           </div>
           <Link
             to={"cat"}
