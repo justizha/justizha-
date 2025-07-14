@@ -197,128 +197,138 @@ export default function Music() {
         <section className="h-[26rem] overflow-y-auto">
           {/* Recent Tracks */}
           {activeTab === "recent" && (
-            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-900">
-              <h2 className="text-xl font-semibold px-4">Recent Tracks</h2>
-              {recentTracks.map((track, index) => (
-                <div
-                  key={`recent-${
-                    // biome-ignore lint/suspicious/noArrayIndexKey: <>
-                    index
-                  }`}
-                  className={`flex items-center p-4 bg-base-200 shadow-md
+            <div>
+              <h2 className="text-xl font-semibold px-4 border-b border-teal-900 border  bg-base-200 py-2 rounded-t sticky top-0">
+                Recent Tracks
+              </h2>
+              <div className="px-3 bg-base-200 rounded-b border-x border-b border-teal-900 ">
+                {recentTracks.map((track, index) => (
+                  <div
+                    key={`recent-${
+                      // biome-ignore lint/suspicious/noArrayIndexKey: <>
+                      index
+                    }`}
+                    className={`flex items-center p-4 bg-base-200 shadow-md
                     ${index <= 9 ? ` border-b border-teal-900` : ``}`}
-                >
-                  <div className="w-8 h-9 flex items-center justify-center bg-base-100 rounded-lg mr-4 text-sm font-medium">
-                    {index + 1}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-medium  truncate max-w-[14rem]">
-                      {track.name}
-                    </h3>
-                    <p className="text-sm">by {track.artist["#text"]}</p>
-                    {track.album?.["#text"] && (
-                      <p className="text-sm truncate max-w-[14rem]">
-                        {track.album["#text"]}
+                  >
+                    <div className="w-8 h-9 flex items-center justify-center bg-base-100 rounded-lg mr-4 text-sm font-medium">
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium  truncate max-w-[14rem]">
+                        {track.name}
+                      </h3>
+                      <p className="text-sm">by {track.artist["#text"]}</p>
+                      {track.album?.["#text"] && (
+                        <p className="text-sm truncate max-w-[14rem]">
+                          {track.album["#text"]}
+                        </p>
+                      )}
+                    </div>
+                    {track["@attr"]?.nowplaying ? (
+                      <div className="flex items-center text-green-600">
+                        <div className="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse" />
+                        <span className="text-sm">Now Playing</span>
+                      </div>
+                    ) : (
+                      <p className="text-sm">
+                        {moment(Number(track.date?.uts) * 1000).fromNow()}
                       </p>
                     )}
                   </div>
-                  {track["@attr"]?.nowplaying ? (
-                    <div className="flex items-center text-green-600">
-                      <div className="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse" />
-                      <span className="text-sm">Now Playing</span>
-                    </div>
-                  ) : (
-                    <p className="text-sm">
-                      {moment(Number(track.date?.uts) * 1000).fromNow()}
-                    </p>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
 
           {/* Top Tracks */}
           {activeTab === "toptracks" && (
-            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-900">
-              <h2 className="text-xl font-semibold mb-4 px-4">
+            <div>
+              <h2 className="text-xl font-semibold px-4 border-b border-teal-900 border  bg-base-200 py-2 rounded-t sticky top-0">
                 Top Tracks (This Month)
               </h2>
-              {topTracks.map((track, index) => (
-                <div
-                  key={`top-track-${
-                    // biome-ignore lint/suspicious/noArrayIndexKey: <>
-                    index
-                  }`}
-                  className={`flex items-center p-4 bg-base-200 shadow-md
+              <div className="px-3 bg-base-200 rounded-b border-x border-b border-teal-900">
+                {topTracks.map((track, index) => (
+                  <div
+                    key={`top-track-${
+                      // biome-ignore lint/suspicious/noArrayIndexKey: <>
+                      index
+                    }`}
+                    className={`flex items-center p-4 bg-base-200 shadow-md
                     ${index <= 9 ? ` border-b border-teal-900` : ``}`}
-                >
-                  <div className="w-8 h-9 flex items-center justify-center bg-base-100 rounded-lg mr-4 text-sm font-medium">
-                    {index + 1}
+                  >
+                    <div className="w-8 h-9 flex items-center justify-center bg-base-100 rounded-lg mr-4 text-sm font-medium">
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium ">{track.name}</h3>
+                      <p>{track.artist.name}</p>
+                      <p className="text-sm ">
+                        {Number.parseInt(track.playcount).toLocaleString()}{" "}
+                        plays
+                      </p>
+                    </div>
+                    <div>
+                      <a
+                        href={`https://last.fm/music/${track.artist.name}`}
+                        className="btn btn-outline btn-error"
+                      >
+                        Visit{" "}
+                        <img
+                          src="/assets/lastfm.png"
+                          alt="last Fm"
+                          className="w-4 h-4"
+                        />
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-medium ">{track.name}</h3>
-                    <p>{track.artist.name}</p>
-                    <p className="text-sm ">
-                      {Number.parseInt(track.playcount).toLocaleString()} plays
-                    </p>
-                  </div>
-                  <div>
-                    <a
-                      href={`https://last.fm/music/${track.artist.name}`}
-                      className="btn btn-outline btn-error"
-                    >
-                      Visit{" "}
-                      <img
-                        src="/assets/lastfm.png"
-                        alt="last Fm"
-                        className="w-4 h-4"
-                      />
-                    </a>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
 
           {/* Top Artists */}
           {activeTab === "topartists" && (
-            <div className="px-3 pt-3 bg-base-200 rounded border border-teal-900">
-              <h2 className="text-xl font-semibold mb-4 px-4">
+            <div>
+              <h2 className="text-xl font-semibold px-4 border-b border-teal-900 border  bg-base-200 py-2 rounded-t sticky top-0">
                 Top Artists (This Month)
               </h2>
-              {topArtists.map((artist, index) => (
-                <div
-                  key={`top-artist-${
-                    // biome-ignore lint/suspicious/noArrayIndexKey: <>
-                    index
-                  }`}
-                  className={`flex items-center p-4 bg-base-200 shadow-md
+              <div className="px-3 bg-base-200 rounded-b border-x border-b border-teal-900">
+                {topArtists.map((artist, index) => (
+                  <div
+                    key={`top-artist-${
+                      // biome-ignore lint/suspicious/noArrayIndexKey: <>
+                      index
+                    }`}
+                    className={`flex items-center p-4 bg-base-200 shadow-md
                     ${index <= 9 ? ` border-b border-teal-900` : ``}`}
-                >
-                  <div className="w-8 h-9 flex items-center justify-center bg-base-100 rounded-lg mr-4 text-sm font-medium">
-                    {index + 1}
+                  >
+                    <div className="w-8 h-9 flex items-center justify-center bg-base-100 rounded-lg mr-4 text-sm font-medium">
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold">{artist.name}</h3>
+                      <p className="text-sm">
+                        {Number.parseInt(artist.playcount).toLocaleString()}{" "}
+                        plays
+                      </p>
+                    </div>
+                    <div className="">
+                      <a
+                        href={`https://last.fm/music/${artist.name}`}
+                        className="btn btn-outline btn-error"
+                      >
+                        Visit{" "}
+                        <img
+                          src="/assets/lastfm.png"
+                          alt="last Fm"
+                          className="w-4 h-4"
+                        />
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold">{artist.name}</h3>
-                    <p className="text-sm">
-                      {Number.parseInt(artist.playcount).toLocaleString()} plays
-                    </p>
-                  </div>
-                  <div className="">
-                    <a
-                      href={`https://last.fm/music/${artist.name}`}
-                      className="btn btn-outline btn-error"
-                    >
-                      Visit{" "}
-                      <img
-                        src="/assets/lastfm.png"
-                        alt="last Fm"
-                        className="w-4 h-4"
-                      />
-                    </a>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
         </section>
