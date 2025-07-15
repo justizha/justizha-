@@ -1,16 +1,16 @@
 export default function Brief() {
   return (
-    <section className="py-28 ">
+    <section className="pt-24">
       <div className="relative">
         <img
+          loading="lazy"
           src="/assets/zzz.gif"
           alt="cat who is sleeping"
-          className="w-48 absolute -right-5.5 -top-31  z-20"
+          className="w-40 absolute -right-5.5 -top-25  z-20"
         />
-        <div className="rounded-md bg-base-200 sm:w-lg py-5">
-          <p className="p-5">
-            Working in fullstack development at the moment, but frontend is
-            where my true interests lie.
+        <div className="rounded-md bg-base-200 sm:w-lg px-4  py-5">
+          <p className="p-5 text-lg text-center">
+            " I code one line at the time "
           </p>
         </div>
       </div>

@@ -9,7 +9,12 @@ export default function Blogs() {
         <div className="hero-content flex-col">
           <div>
             <h1 className="text-2xl text-center mb-2">Blog Posts.</h1>
-            <img src="assets/cat_typing.gif" className="w-36" alt="me fr" />
+            <img
+              loading="lazy"
+              src="assets/cat_typing.gif"
+              className="w-36"
+              alt="me fr"
+            />
           </div>
           <Link
             to={"cat"}
