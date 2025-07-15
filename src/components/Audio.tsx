@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/a11y/useButtonType: <> */
+/** biome-ignore-all lint/a11y/useMediaCaption: <> */
 import { useEffect, useRef, useState } from "react";
 
 export default function Audio() {
@@ -61,7 +63,8 @@ export default function Audio() {
         <img
           src="/assets/music_notes.gif"
           className="w-14  brightness-0 invert absolute -top-20 right-10"
-          alt=""
+          alt="notes"
+          loading="lazy"
         />
         <p className="text-sm mx-1">{Tracks[currentTrackIndex].name}</p>
 
