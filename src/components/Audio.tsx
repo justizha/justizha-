@@ -60,13 +60,9 @@ export default function Audio() {
         >
           ⏮
         </button>
-        <img
-          src="/assets/music_notes.gif"
-          className="w-14  brightness-0 invert absolute -top-20 right-10"
-          alt="notes"
-          loading="lazy"
-        />
-        <p className="text-sm mx-1">{Tracks[currentTrackIndex].name}</p>
+        <p className="text-sm mx-1 w-42 truncate">
+          {Tracks[currentTrackIndex].name}
+        </p>
 
         <button
           onClick={() =>
