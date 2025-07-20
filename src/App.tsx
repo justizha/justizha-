@@ -2,7 +2,7 @@ import MainContent from "./components/MainContent";
 
 export default function App() {
   return (
-    <main>
+    <main className="">
       <section className="hero px-4 mt-4">
         <div className="hero-content">
           <div className="sm:max-w-lg max-w-md">

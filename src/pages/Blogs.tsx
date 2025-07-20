@@ -3,9 +3,9 @@ import Nav from "../components/Navigation";
 
 export default function Blogs() {
   return (
-    <>
+    <main className="min-h-screen">
       <Nav />
-      <section className="hero  py-8">
+      <section className="hero py-8">
         <div className="hero-content flex-col">
           <div>
             <h1 className="text-2xl text-center mb-2">Blog Posts.</h1>
@@ -32,6 +32,6 @@ export default function Blogs() {
           </Link>
         </div>
       </section>
-    </>
+    </main>
   );
 }
