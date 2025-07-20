@@ -123,7 +123,7 @@ export default function Music() {
                 <li className="flex flex-col items-center">
                   <span className="text-lg font-semibold">
                     {Number.parseInt(
-                      userInfo.playcount || "0"
+                      userInfo.playcount || "0",
                     ).toLocaleString()}
                   </span>
                   <span className="text-xs uppercase tracking-wide text-gray-400">
@@ -133,7 +133,7 @@ export default function Music() {
                 <li className="flex flex-col items-center">
                   <span className="text-lg font-semibold">
                     {Number.parseInt(
-                      userInfo.artist_count || "0"
+                      userInfo.artist_count || "0",
                     ).toLocaleString()}
                   </span>
                   <span className="text-xs uppercase tracking-wide text-gray-400">
@@ -143,7 +143,7 @@ export default function Music() {
                 <li className="flex flex-col items-center">
                   <span className="text-lg font-semibold">
                     {Number.parseInt(
-                      userInfo.track_count || "0"
+                      userInfo.track_count || "0",
                     ).toLocaleString()}
                   </span>
                   <span className="text-xs uppercase tracking-wide text-gray-400">
@@ -160,7 +160,7 @@ export default function Music() {
           <button
             type="button"
             onClick={() => setActiveTab("recent")}
-            className={`flex-1 py-2 px-4 text-sm font-medium shadow rounded duration-500 
+            className={`flex-1 py-2 px-4 text-sm font-medium shadow rounded duration-500
               transition-colors ${
                 activeTab === "recent"
                   ? "bg-base-100 text-gray-200 border border-teal-700"
