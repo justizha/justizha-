@@ -98,7 +98,7 @@ export default function Music() {
   return (
     <>
       <Nav />
-      <main className="mx-auto p-4 max-w-7xl h-fit pb-16 flex gap-6 sm:flex-row flex-col justify-center">
+      <main className="mx-auto p-4 max-w-7xl h-fit pb-16 flex gap-4 sm:flex-row flex-col justify-center">
         {/* User Info Sidebar - Reduced width */}
         {userInfo && (
           <aside className="sm:w-80 flex-shrink-0 w-full">
@@ -143,7 +143,7 @@ export default function Music() {
                       Artists
                     </div>
                   </div>
-                  
+
                   <div className="flex justify-between items-center p-3 bg-base-100/50 rounded-lg">
                     <div className="text-lg font-semibold">
                       {Number.parseInt(
@@ -161,9 +161,9 @@ export default function Music() {
         )}
 
         {/* Main Content Area - Expanded */}
-        <section className="flex-1 min-w-0 max-w-2xl ">
+        <section className="flex-1 min-w-0 max-w-[38rem] ">
           {/* Tabs */}
-          <div className="flex space-x-1 mb-6 bg-base-200 p-2 rounded-lg border border-teal-900">
+          <div className="flex space-x-1 mb-3 bg-base-200 p-2 rounded-lg border border-teal-900">
             <button
               type="button"
               onClick={() => setActiveTab("recent")}
@@ -212,18 +212,39 @@ export default function Music() {
                   {recentTracks.map((track, index) => (
                     <div
                       key={`recent-${index}`}
-                      className={`flex items-center p-5 bg-base-200 hover:bg-base-300/30 transition-colors duration-200
+                      className={`${
+                        track["@attr"]?.nowplaying
+                          ? `flex items-center pt-5 px-2 bg-base-200 hover:bg-base-300/30 transition-colors duration-200 mx-5`
+                          : `flex items-center p-3 mx-5 bg-base-200 hover:bg-base-300/30 transition-colors duration-200`
+                      } 
                   ${
                     index < recentTracks.length - 1
                       ? "border-b border-teal-900/50"
                       : ""
                   }`}
                     >
-                      <div className="w-10 h-10 flex items-center justify-center bg-base-100 rounded-lg mr-5 text-sm font-medium shadow-sm">
-                        {index + 1}
-                      </div>
+                      {track["@attr"]?.nowplaying ? (
+                        <div className="px-2">
+                          <img
+                            src={
+                              track.image?.[2]?.["#text"] ||
+                              "/default-avatar.png"
+                            }
+                            alt={track.name}
+                            className="w-22 h-22 rounded-lg object-cover border border-base-300 mx-auto mb-4"
+                          />
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
                       <div className="flex-1 min-w-0 mr-4">
-                        <h3 className="font-medium truncate text-gray-100 mb-1">
+                        <h3
+                          className={`${
+                            track["@attr"]?.nowplaying
+                              ? `font-medium truncate text-gray-100 mb-1`
+                              : `font-medium truncate text-gray-100 mb-1 text-xs`
+                          } `}
+                        >
                           {track.name}
                         </h3>
                         <p className="text-sm text-gray-300 truncate">
