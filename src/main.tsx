@@ -7,6 +7,7 @@ import Blogs from "./pages/Blogs.tsx";
 import Cat from "./pages/blogs/Cat.tsx";
 import Simplicity from "./pages/blogs/Simplicity.tsx";
 import Page from "./pages/Page.tsx";
+import CRTWrapper from "./components/CRTeffects";
 
 const Music = lazy(() => import("./pages/Music.tsx"));
 
@@ -14,19 +15,22 @@ createRoot(
   document.getElementById("root") || document.createElement("div")
 ).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="lastfm" element={<Page />} />
-        <Route index element={<App />} />
-        <Route path="music" element={<Music />} />
+    {" "}
+    <CRTWrapper>
+      <BrowserRouter>
+        <Routes>
+          <Route path="lastfm" element={<Page />} />
+          <Route index element={<App />} />
+          <Route path="music" element={<Music />} />
 
-        <Route path="blog">
-          <Route index element={<Blogs />} />
-          <Route path="simplicity" element={<Simplicity />} />
-          <Route path="cat" element={<Cat />} />
-        </Route>
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+          <Route path="blog">
+            <Route index element={<Blogs />} />
+            <Route path="simplicity" element={<Simplicity />} />
+            <Route path="cat" element={<Cat />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </CRTWrapper>
   </StrictMode>
 );

@@ -18,14 +18,14 @@ export default function Blogs() {
           </div>
           <Link
             to={"cat"}
-            className="border sm:w-lg w-xs text-lg p-3 border-teal-400 hover:bg-base-200 rounded"
+            className="border sm:w-lg w-xs text-lg p-3 border-teal-400 hover:bg-base-200"
           >
             <p>Cat.</p>
             <span className="text-sm text-gray-400">📅 2025-07-12</span>
           </Link>
           <Link
             to={"simplicity"}
-            className="border sm:w-lg w-xs text-lg p-3 border-teal-400 hover:bg-base-200 rounded"
+            className="border sm:w-lg w-xs text-lg p-3 border-teal-400 hover:bg-base-200"
           >
             <p>Simplicity</p>
             <span className="text-sm text-gray-400">📅 2025-07-02</span>

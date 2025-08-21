@@ -98,16 +98,16 @@ export default function Music() {
   return (
     <>
       <Nav />
-      <main className="mx-auto p-4 max-w-7xl h-fit pb-16 flex gap-4 sm:flex-row flex-col justify-center">
+      <main className="mx-auto p-4 max-w-7xl h-fit pt-12  flex gap-4 sm:flex-row flex-col justify-center">
         {/* User Info Sidebar - Reduced width */}
         {userInfo && (
           <aside className="sm:w-80 flex-shrink-0 w-full">
-            <section className="bg-base-300/60 rounded-lg p-6 shadow-md outline-teal-900 outline flex items-center flex-col sticky top-4">
+            <section className="bg-base-300/60  p-6 shadow-md outline-teal-900 outline flex items-center flex-col sticky top-4">
               <div className="text-center mb-6">
                 <img
                   src={userInfo.image?.[2]?.["#text"] || "/default-avatar.png"}
                   alt={userInfo.name}
-                  className="w-36 h-36 rounded-lg object-cover border border-base-300 mx-auto mb-4"
+                  className="w-36 h-36  object-cover border border-base-300 mx-auto mb-4"
                 />
                 <a
                   href={`https://last.fm/user/${userInfo.name}`}
@@ -122,7 +122,7 @@ export default function Music() {
 
               <div className="w-full">
                 <div className="space-y-4 text-sm text-gray-300">
-                  <div className="flex justify-between items-center p-3 bg-base-100/50 rounded-lg">
+                  <div className="flex justify-between items-center p-3 bg-base-100/50 ">
                     <div className="text-lg font-semibold">
                       {Number.parseInt(
                         userInfo.playcount || "0"
@@ -133,7 +133,7 @@ export default function Music() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center p-3 bg-base-100/50 rounded-lg">
+                  <div className="flex justify-between items-center p-3 bg-base-100/50 ">
                     <div className="text-lg font-semibold">
                       {Number.parseInt(
                         userInfo.artist_count || "0"
@@ -144,7 +144,7 @@ export default function Music() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center p-3 bg-base-100/50 rounded-lg">
+                  <div className="flex justify-between items-center p-3 bg-base-100/50 ">
                     <div className="text-lg font-semibold">
                       {Number.parseInt(
                         userInfo.track_count || "0"
@@ -163,11 +163,11 @@ export default function Music() {
         {/* Main Content Area - Expanded */}
         <section className="flex-1 min-w-0 max-w-[38rem] ">
           {/* Tabs */}
-          <div className="flex space-x-1 mb-3 bg-base-200 p-2 rounded-lg border border-teal-900">
+          <div className="flex space-x-1 mb-3 bg-base-200 p-2  border border-teal-900">
             <button
               type="button"
               onClick={() => setActiveTab("recent")}
-              className={`flex-1 py-3 px-6 text-sm font-medium shadow rounded-lg duration-300
+              className={`flex-1 py-3 px-6 text-sm font-medium shadow  duration-300
             transition-all ${
               activeTab === "recent"
                 ? "bg-base-100 text-gray-200 border border-teal-700 transform scale-[1.02]"
@@ -179,7 +179,7 @@ export default function Music() {
             <button
               type="button"
               onClick={() => setActiveTab("toptracks")}
-              className={`flex-1 py-3 px-6 text-sm font-medium shadow rounded-lg duration-300 transition-all ${
+              className={`flex-1 py-3 px-6 text-sm font-medium shadow  duration-300 transition-all ${
                 activeTab === "toptracks"
                   ? "bg-base-100 text-gray-300 border border-teal-700 transform scale-[1.02]"
                   : "text-gray-300 hover:text-gray-200 hover:bg-base-300/50"
@@ -190,7 +190,7 @@ export default function Music() {
             <button
               type="button"
               onClick={() => setActiveTab("topartists")}
-              className={`flex-1 py-3 px-6 text-sm font-medium shadow rounded-lg duration-300 transition-all ${
+              className={`flex-1 py-3 px-6 text-sm font-medium shadow  duration-300 transition-all ${
                 activeTab === "topartists"
                   ? "bg-base-100 text-gray-200 shadow-sm border border-teal-700 transform scale-[1.02]"
                   : "text-gray-300 hover:text-gray-200 hover:bg-base-300/50"
@@ -201,14 +201,14 @@ export default function Music() {
           </div>
 
           {/* Content */}
-          <div className="h-[32rem] overflow-y-auto rounded-lg">
+          <div className="flex-1 ">
             {/* Recent Tracks */}
             {activeTab === "recent" && (
               <div>
-                <h2 className="text-xl font-semibold px-6 border-b border-teal-900 border bg-base-200 py-4 rounded-t-lg sticky top-0 z-10">
+                <h2 className="text-xl font-semibold px-6 border-b border-teal-900 border bg-base-200 py-4  sticky top-0 z-10">
                   Recent Tracks
                 </h2>
-                <div className="bg-base-200 rounded-b-lg border-x border-b border-teal-900">
+                <div className="bg-base-200  border-x border-b border-teal-900 h-[21rem] overflow-y-auto">
                   {recentTracks.map((track, index) => (
                     <div
                       key={`recent-${index}`}
@@ -224,14 +224,14 @@ export default function Music() {
                   }`}
                     >
                       {track["@attr"]?.nowplaying ? (
-                        <div className="px-2">
+                        <div className="pr-2">
                           <img
                             src={
                               track.image?.[2]?.["#text"] ||
                               "/default-avatar.png"
                             }
                             alt={track.name}
-                            className="w-22 h-22 rounded-lg object-cover border border-base-300 mx-auto mb-4"
+                            className="w-28 h-28  object-cover border border-base-300 mx-auto mb-4"
                           />
                         </div>
                       ) : (
@@ -262,7 +262,7 @@ export default function Music() {
                       </div>
                       <div className="flex-shrink-0">
                         {track["@attr"]?.nowplaying ? (
-                          <div className="flex items-center text-green-500 bg-green-500/10 px-3 py-1 rounded-full">
+                          <div className="animate-pulse flex items-center text-green-500 bg-green-500/10 px-3 py-1 rounded-full">
                             <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse" />
                             <span className="text-sm font-medium">
                               Now Playing
@@ -283,10 +283,10 @@ export default function Music() {
             {/* Top Tracks */}
             {activeTab === "toptracks" && (
               <div>
-                <h2 className="text-xl font-semibold px-6 border-b border-teal-900 border bg-base-200 py-4 rounded-t-lg sticky top-0 z-10">
+                <h2 className="text-xl font-semibold px-6 border-b border-teal-900 border bg-base-200 py-4  sticky top-0 z-10">
                   Top Tracks (This Month)
                 </h2>
-                <div className="bg-base-200 rounded-b-lg border-x border-b border-teal-900">
+                <div className="bg-base-200  border-x border-b border-teal-900 h-[21rem] overflow-y-auto">
                   {topTracks.map((track, index) => (
                     <div
                       key={`top-track-${index}`}
@@ -297,7 +297,7 @@ export default function Music() {
                       : ""
                   }`}
                     >
-                      <div className="w-10 h-10 flex items-center justify-center bg-base-100 rounded-lg mr-5 text-sm font-medium shadow-sm">
+                      <div className="w-10 h-10 flex items-center justify-center bg-base-100  mr-5 text-sm font-medium shadow-sm">
                         {index + 1}
                       </div>
                       <div className="flex-1 min-w-0 mr-4">
@@ -336,10 +336,10 @@ export default function Music() {
             {/* Top Artists */}
             {activeTab === "topartists" && (
               <div>
-                <h2 className="text-xl font-semibold px-6 border-b border-teal-900 border bg-base-200 py-4 rounded-t-lg sticky top-0 z-10">
+                <h2 className="text-xl font-semibold px-6 border-b border-teal-900 border bg-base-200 py-4  sticky top-0 z-10">
                   Top Artists (This Month)
                 </h2>
-                <div className="bg-base-200 rounded-b-lg border-x border-b border-teal-900">
+                <div className="bg-base-200  border-x border-b border-teal-900 h-[21rem] overflow-y-auto">
                   {topArtists.map((artist, index) => (
                     <div
                       key={`top-artist-${index}`}
@@ -350,7 +350,7 @@ export default function Music() {
                       : ""
                   }`}
                     >
-                      <div className="w-10 h-10 flex items-center justify-center bg-base-100 rounded-lg mr-5 text-sm font-medium shadow-sm">
+                      <div className="w-10 h-10 flex items-center justify-center bg-base-100  mr-5 text-sm font-medium shadow-sm">
                         {index + 1}
                       </div>
                       <div className="flex-1 min-w-0 mr-4">
