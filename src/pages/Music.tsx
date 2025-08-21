@@ -247,7 +247,11 @@ export default function Music() {
                         >
                           {track.name}
                         </h3>
-                        <p className="text-sm text-gray-300 truncate">
+                        <p className={`${
+                            track["@attr"]?.nowplaying
+                              ? `text-sm text-gray-300 truncate`
+                              : `text-xs text-gray-300 truncate`
+                          } `}>
                           by {track.artist["#text"]}
                         </p>
                         {track.album?.["#text"] && (
