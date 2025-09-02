@@ -98,7 +98,7 @@ export default function Music() {
   return (
     <>
       <Nav />
-      <main className="mx-auto p-4 max-w-7xl h-fit pt-12  flex gap-4 sm:flex-row flex-col justify-center">
+      <main className="mx-auto p-4 max-w-7xl h-fit  pt-12  flex gap-4 sm:flex-row flex-col justify-center py-20">
         {/* User Info Sidebar - Reduced width */}
         {userInfo && (
           <aside className="sm:w-80 flex-shrink-0 w-full">
@@ -215,7 +215,7 @@ export default function Music() {
                       className={`${
                         track["@attr"]?.nowplaying
                           ? `flex items-center pt-5 px-2 bg-base-200 hover:bg-base-300/30 transition-colors duration-200 mx-5`
-                          : `flex items-center p-3 mx-5 bg-base-200 hover:bg-base-300/30 transition-colors duration-200`
+                          : `flex items-center p-1 mx-5 bg-base-200 hover:bg-base-300/30 transition-colors duration-200`
                       } 
                   ${
                     index < recentTracks.length - 1
