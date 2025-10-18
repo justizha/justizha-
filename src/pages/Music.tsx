@@ -13,6 +13,7 @@ import type {
   LastFmTrack,
   LastFmUser,
 } from "../types/lastfm";
+import Loading from "../components/Loading";
 
 export default function Music() {
   type TabType = "recent" | "toptracks" | "topartists";
@@ -74,14 +75,7 @@ export default function Music() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8shadow-md-b-2shadow-md-gray-900 mx-auto" />
-          <img src="/assets/rollingcar.gif" alt="cat" className="w-20" />
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
@@ -247,11 +241,13 @@ export default function Music() {
                         >
                           {track.name}
                         </h3>
-                        <p className={`${
+                        <p
+                          className={`${
                             track["@attr"]?.nowplaying
                               ? `text-sm text-gray-300 truncate`
                               : `text-xs text-gray-300 truncate`
-                          } `}>
+                          } `}
+                        >
                           by {track.artist["#text"]}
                         </p>
                         {track.album?.["#text"] && (
