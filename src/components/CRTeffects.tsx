@@ -8,7 +8,7 @@ interface CRT {
 export default function CRTWrapper({ children, className = "" }: CRT) {
   return (
     <div
-      className={`relative min-h-screen overflow-hidden bg-transparent ${className}`}
+      className={`relative min-h-dvh overflow-hidden bg-transparent ${className}`}
     >
       {/* Main Content */}
       <div className="relative z-10">{children}</div>
