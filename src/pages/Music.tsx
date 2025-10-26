@@ -119,7 +119,7 @@ export default function Music() {
                   <div className="flex justify-between items-center p-3 bg-base-100/50 ">
                     <div className="text-lg font-semibold">
                       {Number.parseInt(
-                        userInfo.playcount || "0"
+                        userInfo.playcount || "0",
                       ).toLocaleString()}
                     </div>
                     <div className="text-xs uppercase tracking-wide text-gray-400">
@@ -130,7 +130,7 @@ export default function Music() {
                   <div className="flex justify-between items-center p-3 bg-base-100/50 ">
                     <div className="text-lg font-semibold">
                       {Number.parseInt(
-                        userInfo.artist_count || "0"
+                        userInfo.artist_count || "0",
                       ).toLocaleString()}
                     </div>
                     <div className="text-xs uppercase tracking-wide text-gray-400">
@@ -141,7 +141,7 @@ export default function Music() {
                   <div className="flex justify-between items-center p-3 bg-base-100/50 ">
                     <div className="text-lg font-semibold">
                       {Number.parseInt(
-                        userInfo.track_count || "0"
+                        userInfo.track_count || "0",
                       ).toLocaleString()}
                     </div>
                     <div className="text-xs uppercase tracking-wide text-gray-400">
@@ -210,7 +210,7 @@ export default function Music() {
                         track["@attr"]?.nowplaying
                           ? `flex items-center pt-5 px-2 bg-base-200 hover:bg-base-300/30 transition-colors duration-200 mx-5`
                           : `flex items-center p-1 mx-5 bg-base-200 hover:bg-base-300/30 transition-colors duration-200`
-                      } 
+                      }
                   ${
                     index < recentTracks.length - 1
                       ? "border-b border-teal-900/50"

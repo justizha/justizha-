@@ -5,6 +5,8 @@ interface CRT {
   className?: string;
 }
 
+const random: number = Math.random();
+
 export default function CRTWrapper({ children, className = "" }: CRT) {
   return (
     <div
@@ -47,9 +49,9 @@ export default function CRTWrapper({ children, className = "" }: CRT) {
               style={{
                 height: "1px",
                 top: `${i * 8 + Math.sin(i) * 3}%`,
-                opacity: 0.1 + Math.random() * 0.3,
+                opacity: 0.1 + random * 0.3,
                 animation: `flicker-${i % 3} ${
-                  3 + Math.random() * 2
+                  3 + random * 2
                 }s infinite`,
               }}
             />
@@ -78,8 +80,8 @@ export default function CRTWrapper({ children, className = "" }: CRT) {
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(ellipse at center, 
-              transparent 40%, 
+            background: `radial-gradient(ellipse at center,
+              transparent 40%,
               rgba(0, 0, 0, 0.1) 80%,
               rgba(0, 0, 0, 0.4) 100%)`,
           }}
