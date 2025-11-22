@@ -63,16 +63,20 @@ export default function Music() {
       }
     };
 
-    const timer = setTimeout(() => {
-      fetchData(true);
-    }, 3000);
-    const interval = setInterval(() => fetchData(false), 30000);
+    let isMounted = true;
+     const timer = setTimeout(() => {
+       if (isMounted) fetchData(true);
+     }, 3000);
+     const interval = setInterval(() => {
+       if (isMounted) fetchData(false);
+     }, 30000);
 
-    return () => {
-      clearTimeout(timer);
-      clearInterval(interval);
-    };
-  }, []);
+     return () => {
+       isMounted = false;
+       clearTimeout(timer);
+       clearInterval(interval);
+     };
+   }, [username])
 
   if (loading) {
     return <Loading />;
