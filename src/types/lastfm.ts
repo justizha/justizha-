@@ -1,10 +1,10 @@
 export interface LastFmImage {
-  "#text": string;
-  size: "small" | "medium" | "large" | "extralarge";
+  '#text': string;
+  size: 'small' | 'medium' | 'large' | 'extralarge';
 }
 
 export interface LastFmArtist {
-  "#text": string;
+  '#text': string;
   mbid?: string;
 }
 
@@ -19,7 +19,7 @@ export interface LastFmArtistDetailed {
 }
 
 export interface LastFmAlbum {
-  "#text": string;
+  '#text': string;
   mbid?: string;
 }
 
@@ -31,10 +31,10 @@ export interface LastFmTrack {
   streamable?: string;
   date?: {
     uts: string;
-    "#text": string;
+    '#text': string;
   };
   url?: string;
-  "@attr"?: {
+  '@attr'?: {
     nowplaying?: string;
   };
 }
@@ -46,7 +46,7 @@ export interface LastFmTopTrack {
   mbid?: string;
   url: string;
   streamable: {
-    "#text": string;
+    '#text': string;
     fulltrack: string;
   };
   artist: {
@@ -55,7 +55,7 @@ export interface LastFmTopTrack {
     url: string;
   };
   image: LastFmImage[];
-  "@attr"?: {
+  '@attr'?: {
     rank: string;
   };
 }
@@ -74,7 +74,7 @@ export interface LastFmUser {
   bootstrap?: string;
   registered: {
     unixtime: string;
-    "#text": string;
+    '#text': string;
   };
   type?: string;
   artist_count?: string;
@@ -85,7 +85,7 @@ export interface LastFmUser {
 export interface LastFmRecentTracksResponse {
   recenttracks: {
     track: LastFmTrack[];
-    "@attr": {
+    '@attr': {
       user: string;
       totalPages: string;
       page: string;
@@ -98,7 +98,7 @@ export interface LastFmRecentTracksResponse {
 export interface LastFmTopTracksResponse {
   toptracks: {
     track: LastFmTopTrack[];
-    "@attr": {
+    '@attr': {
       user: string;
       totalPages: string;
       page: string;
@@ -111,7 +111,7 @@ export interface LastFmTopTracksResponse {
 export interface LastFmTopArtistsResponse {
   topartists: {
     artist: LastFmArtistDetailed[];
-    "@attr": {
+    '@attr': {
       user: string;
       totalPages: string;
       page: string;
@@ -123,4 +123,11 @@ export interface LastFmTopArtistsResponse {
 
 export interface LastFmUserResponse {
   user: LastFmUser;
+}
+
+export interface LastFmAllData {
+  recentTracks: LastFmTrack[];
+  topTracks: LastFmTopTrack[];
+  topArtists: LastFmArtistDetailed[];
+  userInfo: LastFmUser | null;
 }
