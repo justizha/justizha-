@@ -4,13 +4,14 @@ export default function Contact() {
       <button
         type="button"
         onClick={() => {
-          const modal = document.getElementById("mdl") as HTMLDialogElement;
+          const modal = document.getElementById('mdl') as HTMLDialogElement;
           if (modal) modal.showModal();
         }}
         className="btn btn-outline btn-accent sm:w-lg w-full"
       >
         <p className="text-lg">Links</p>
       </button>
+
       {/* dialog */}
       <dialog id="mdl" className="modal">
         <div className="modal-box">
@@ -21,16 +22,25 @@ export default function Contact() {
             </button>
           </form>
 
-          <h3 className="font-bold text-lg pb-2 text-center">
-            Socials & Contacts
-          </h3>
+          <div className="text-center pb-2">
+            <h3 className="font-bold text-xl">Socials & Contacts</h3>
+
+            <a
+              href={'https://nohello.net/en/'}
+              rel="noopener noreferrer"
+              target="_blank"
+              className="text-cyan-200  text-xs italic hover:underline "
+            >
+              "Read this before messaging !"
+            </a>
+          </div>
 
           <article>
             <ul className="space-y-2">
               {/* email */}
               <li>
                 <a
-                  href={"mailto:alfathizhaaaaaaa@gmail.com"}
+                  href={'mailto:alfathizhaaaaaaa@gmail.com'}
                   rel="noopener noreferrer"
                   className="btn bg-gray-200 text-base-300  w-full text-[16px]"
                 >
@@ -43,7 +53,7 @@ export default function Contact() {
               {/* github  */}
               <li>
                 <a
-                  href={"https://github.com/justizha"}
+                  href={'https://github.com/justizha'}
                   rel="noopener noreferrer"
                   target="_blank"
                   className="btn w-full btn-soft text-[16px]"
@@ -58,7 +68,7 @@ export default function Contact() {
               <li>
                 <a
                   href={
-                    "https://open.spotify.com/user/31sg4u2iwexudonkopwhqckghd3u?si=0777b9ac7dc74002"
+                    'https://open.spotify.com/user/31sg4u2iwexudonkopwhqckghd3u?si=0777b9ac7dc74002'
                   }
                   rel="noopener noreferrer"
                   target="_blank"
@@ -77,7 +87,7 @@ export default function Contact() {
               {/* twitter */}
               <li>
                 <a
-                  href={"https://twitter.com/ThisIzha"}
+                  href={'https://twitter.com/ThisIzha'}
                   rel="noopener noreferrer"
                   target="_blank"
                   className="btn w-full bg-white text-[16px] text-black"
