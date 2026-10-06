@@ -9,7 +9,7 @@ export default function Music() {
   type TabType = 'recent' | 'toptracks' | 'topartists';
   const [activeTab, setActiveTab] = useState<TabType>('recent');
 
-  const username = 'izha112';
+  const username = import.meta.env.VITE_USER_NAME as string;
 
   const { data, error, isLoading } = useSWR<LastFmAllData>(
     `last-fm-${username}`,
