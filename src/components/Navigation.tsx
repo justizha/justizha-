@@ -1,50 +1,45 @@
-import { Link, useLocation } from "react-router";
+import { NavLink } from "react-router";
+
+const LINKS = [
+  { to: "/", label: "Home", end: true },
+  { to: "/blog", label: "Blogs", end: false },
+  { to: "/music", label: "Music", end: false },
+];
 
 export default function Nav() {
-  const location = useLocation();
-
   return (
-    <header className="flex justify-center mt-4">
-      <nav>
-        <ul className="flex  items-center font-mono">
-          <i className="text-white">•</i>
-          <li>
-            <Link
-              to={"/blog"}
-              className={`btn text-lg btn-link ${
-                location.pathname === "/blog"
-                  ? "text-teal-500"
-                  : "text-teal-600 hover:text-teal-500"
-              }`}
-            >
-              Blogs
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/music"}
-              className={`btn text-lg btn-link ${
-                location.pathname === "/music"
-                  ? "text-teal-500"
-                  : "text-teal-600 hover:text-teal-500"
-              }`}
-            >
-              Music
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/"}
-              className={`btn text-lg btn-link ${
-                location.pathname === "/"
-                  ? "text-teal-500"
-                  : "text-teal-600 hover:text-teal-500"
-              }`}
-            >
-              Home
-            </Link>
-          </li>
-          <i className="text-white">•</i>
+    <header className="mt-4 flex justify-center">
+      <nav aria-label="Main">
+        <ul className="flex items-center gap-2 font-mono">
+          {LINKS.map((link) => (
+            <li key={link.to}>
+              {/* `end` stops Home from matching every route; NavLink sets aria-current itself */}
+              <NavLink
+                to={link.to}
+                end={link.end}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 text-lg transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current ${
+                    isActive
+                      ? "text-teal-300"
+                      : "text-teal-600 hover:text-teal-300"
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    {/* Always rendered so the layout doesn't shift when the active page changes */}
+                    <span
+                      aria-hidden="true"
+                      className={isActive ? "opacity-100" : "opacity-0"}
+                    >
+                      •
+                    </span>
+                    {link.label}
+                  </>
+                )}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </nav>
     </header>

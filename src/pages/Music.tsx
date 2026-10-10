@@ -1,12 +1,118 @@
 import moment from 'moment';
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import useSWR from 'swr';
+import Loading from '../components/Loading';
 import Nav from '../components/Navigation';
 import { getAllLastFmData } from '../service/lastfm';
 import type { LastFmAllData } from '../types/lastfm';
-import Loading from '../components/Loading';
+
+type TabType = 'recent' | 'toptracks' | 'topartists';
+
+const TABS: { id: TabType; label: string; caption?: string }[] = [
+  { id: 'recent', label: 'Recent tracks' },
+  { id: 'toptracks', label: 'Top tracks', caption: 'This month' },
+  { id: 'topartists', label: 'Top artists', caption: 'This month' },
+];
+
+// Last.fm returns this image when there is no real artwork
+const LASTFM_PLACEHOLDER = '2a96cbd8b46e442fc41c2b86b821562f';
+
+function realCover(url?: string) {
+  return url && !url.includes(LASTFM_PLACEHOLDER) ? url : undefined;
+}
+
+function Cover({
+  src,
+  alt = '',
+  className,
+}: {
+  src?: string;
+  alt?: string;
+  className: string;
+}) {
+  if (!src) {
+    return (
+      <div
+        aria-hidden="true"
+        className={`${className} border border-teal-900/60 bg-base-100`}
+      />
+    );
+  }
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      className={`${className} border border-base-300 object-cover`}
+    />
+  );
+}
+
+// Fixed-height scroll area with a fade at the bottom edge
+function Panel({ children }: { children: ReactNode }) {
+  return (
+    <div className="max-h-112 overflow-y-auto border border-teal-900 bg-base-200">
+      <div className="pb-8">{children}</div>
+      <div className="pointer-events-none sticky bottom-0 h-0" aria-hidden="true">
+        <div className="absolute inset-x-0 bottom-0 h-8 bg-linear-to-t from-base-200 to-transparent" />
+      </div>
+    </div>
+  );
+}
+
+type RankedItem = {
+  id: string;
+  name: string;
+  sub?: string;
+  plays: number;
+  href: string;
+};
+
+// Rank, name, playcount, and a bar scaled to the #1 item
+function RankedList({ items }: { items: RankedItem[] }) {
+  const max = Math.max(...items.map((item) => item.plays), 1);
+
+  return (
+    <ol>
+      {items.map((item, index) => (
+        <li
+          key={item.id}
+          className="flex items-center gap-4 border-b border-teal-900/50 px-5 py-3 transition-colors last:border-b-0 hover:bg-base-300/30"
+        >
+          <span className="w-6 text-right text-sm text-gray-400 tabular-nums">
+            {index + 1}
+          </span>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-baseline justify-between gap-3">
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="truncate font-medium text-gray-100 hover:underline"
+              >
+                {item.name}
+              </a>
+              <span className="shrink-0 text-xs text-gray-400 tabular-nums">
+                {item.plays.toLocaleString()} plays
+              </span>
+            </div>
+            {item.sub && (
+              <p className="truncate text-xs text-gray-300">{item.sub}</p>
+            )}
+            <div className="mt-2 h-0.5 bg-teal-900/40">
+              <div
+                className="h-full bg-teal-600"
+                style={{ width: `${(item.plays / max) * 100}%` }}
+              />
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 export default function Music() {
-  type TabType = 'recent' | 'toptracks' | 'topartists';
   const [activeTab, setActiveTab] = useState<TabType>('recent');
 
   const username = import.meta.env.VITE_USER_NAME as string;
@@ -26,9 +132,9 @@ export default function Music() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <h2 className="text-xl font-bold text-red-600 mb-4">Error</h2>
+          <h2 className="mb-4 text-xl font-bold text-red-600">Error</h2>
           <p>{error.message}</p>
         </div>
       </div>
@@ -37,295 +143,175 @@ export default function Music() {
 
   const { recentTracks, topArtists, topTracks, userInfo } = data || {};
 
+  // The newest track gets the hero; the list shows everything after it
+  const latest = recentTracks?.[0];
+  const isLive = Boolean(latest?.['@attr']?.nowplaying);
+  const olderTracks = recentTracks?.slice(1) ?? [];
+
+  const trackItems: RankedItem[] =
+    topTracks?.map((track) => ({
+      id: `${track.artist.name}-${track.name}`,
+      name: track.name,
+      sub: track.artist.name,
+      plays: Number.parseInt(track.playcount, 10),
+      href: `https://www.last.fm/music/${encodeURIComponent(track.artist.name)}/_/${encodeURIComponent(track.name)}`,
+    })) ?? [];
+
+  const artistItems: RankedItem[] =
+    topArtists?.map((artist) => ({
+      id: artist.name,
+      name: artist.name,
+      plays: Number.parseInt(artist.playcount, 10),
+      href: `https://www.last.fm/music/${encodeURIComponent(artist.name)}`,
+    })) ?? [];
+
+  const stats = [
+    { label: 'plays', value: userInfo?.playcount },
+    { label: 'artists', value: userInfo?.artist_count },
+    { label: 'tracks', value: userInfo?.track_count },
+  ];
+
+  const activeCaption = TABS.find((tab) => tab.id === activeTab)?.caption;
+
   return (
     <>
       <Nav />
-      <main className="mx-auto p-4 max-w-7xl h-fit  pt-12  flex gap-4 sm:flex-row flex-col justify-center py-20">
-        {/* User Info Sidebar - Reduced width */}
+      <main className="mx-auto flex max-w-3xl flex-col gap-4 p-4 py-20 pt-12">
+        {/* Profile and stats in one line */}
         {userInfo && (
-          <aside className="sm:w-80 shrink-0 w-full">
-            <section className="bg-base-300/60  p-6 shadow-md outline-teal-900 outline flex items-center flex-col sticky top-4">
-              <div className="text-center mb-6">
-                <img
-                  src={userInfo.image?.[2]?.['#text'] || '/default-avatar.png'}
-                  alt={userInfo.name}
-                  className="w-36 h-36  object-cover border border-base-300 mx-auto mb-4"
-                />
+          <header className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border border-teal-900 bg-base-300/60 p-4">
+            <div className="flex min-w-0 items-center gap-4">
+              <img
+                src={userInfo.image?.[2]?.['#text'] || '/default-avatar.png'}
+                alt={userInfo.name}
+                className="h-14 w-14 shrink-0 border border-base-300 object-cover"
+              />
+              <div className="min-w-0">
                 <a
                   href={`https://last.fm/user/${userInfo.name}`}
                   target="_blank"
-                  className="text-xl font-bold text-gray-100 btn-link block"
                   rel="noreferrer"
+                  className="block truncate text-lg font-bold text-gray-100 hover:underline"
                 >
                   {userInfo.realname || userInfo.name}
                 </a>
                 <p className="text-sm text-gray-400">@{userInfo.name}</p>
               </div>
+            </div>
 
-              <div className="w-full">
-                <div className="space-y-4 text-sm text-gray-300">
-                  <div className="flex justify-between items-center p-3 bg-base-100/50 ">
-                    <div className="text-lg font-semibold">
-                      {Number.parseInt(
-                        userInfo.playcount || '0'
-                      ).toLocaleString()}
-                    </div>
-                    <div className="text-xs uppercase tracking-wide text-gray-400">
-                      Plays
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center p-3 bg-base-100/50 ">
-                    <div className="text-lg font-semibold">
-                      {Number.parseInt(
-                        userInfo.artist_count || '0'
-                      ).toLocaleString()}
-                    </div>
-                    <div className="text-xs uppercase tracking-wide text-gray-400">
-                      Artists
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center p-3 bg-base-100/50 ">
-                    <div className="text-lg font-semibold">
-                      {Number.parseInt(
-                        userInfo.track_count || '0'
-                      ).toLocaleString()}
-                    </div>
-                    <div className="text-xs uppercase tracking-wide text-gray-400">
-                      Tracks
-                    </div>
-                  </div>
+            <dl className="flex gap-8">
+              {stats.map((stat) => (
+                <div key={stat.label} className="flex flex-col-reverse">
+                  <dt className="text-xs text-gray-400">{stat.label}</dt>
+                  <dd className="text-lg font-semibold text-gray-200 tabular-nums">
+                    {Number.parseInt(stat.value || '0', 10).toLocaleString()}
+                  </dd>
                 </div>
-              </div>
-            </section>
-          </aside>
+              ))}
+            </dl>
+          </header>
         )}
 
-        {/* Main Content Area - Expanded */}
-        <section className="flex-1 min-w-0 max-w-152 ">
-          {/* Tabs */}
-          <div className="flex space-x-1 mb-3 bg-base-200 p-2  border border-teal-900">
-            <button
-              type="button"
-              onClick={() => setActiveTab('recent')}
-              className={`flex-1 py-3 px-6 text-sm font-medium shadow  duration-300
-            transition-all ${
-              activeTab === 'recent'
-                ? 'bg-base-100 text-gray-200 border border-teal-700 transform scale-[1.02]'
-                : 'text-gray-300 hover:text-gray-200 hover:bg-base-300/50'
-            }`}
-            >
-              Recent Tracks
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('toptracks')}
-              className={`flex-1 py-3 px-6 text-sm font-medium shadow  duration-300 transition-all ${
-                activeTab === 'toptracks'
-                  ? 'bg-base-100 text-gray-300 border border-teal-700 transform scale-[1.02]'
-                  : 'text-gray-300 hover:text-gray-200 hover:bg-base-300/50'
-              }`}
-            >
-              Top Tracks
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('topartists')}
-              className={`flex-1 py-3 px-6 text-sm font-medium shadow  duration-300 transition-all ${
-                activeTab === 'topartists'
-                  ? 'bg-base-100 text-gray-200 shadow-sm border border-teal-700 transform scale-[1.02]'
-                  : 'text-gray-300 hover:text-gray-200 hover:bg-base-300/50'
-              }`}
-            >
-              Top Artists
-            </button>
+        {/* Hero: now playing, or the last thing played */}
+        {latest && (
+          <section className="flex flex-col gap-6 border border-teal-900 bg-base-200 p-5 sm:flex-row">
+            <Cover
+              src={realCover(
+                latest.image?.[3]?.['#text'] || latest.image?.[2]?.['#text']
+              )}
+              alt={`${latest.name} cover`}
+              className="h-48 w-48 shrink-0"
+            />
+            <div className="flex min-w-0 flex-col justify-center gap-1">
+              {isLive ? (
+                <p className="flex items-center gap-2 text-sm font-medium text-green-500">
+                  <span className="h-2 w-2 rounded-full bg-green-500 motion-safe:animate-pulse" />
+                  Now playing
+                </p>
+              ) : (
+                <p className="text-sm text-gray-400">
+                  Last played {moment(Number(latest.date?.uts) * 1000).fromNow()}
+                </p>
+              )}
+              <h2 className="wrap-break-word text-2xl font-bold text-gray-100">
+                {latest.name}
+              </h2>
+              <p className="text-gray-300">by {latest.artist['#text']}</p>
+              {latest.album?.['#text'] && (
+                <p className="text-sm text-gray-400">{latest.album['#text']}</p>
+              )}
+            </div>
+          </section>
+        )}
+
+        {/* Tabs */}
+        <section>
+          <div
+            role="tablist"
+            className="mb-3 flex gap-1 border border-teal-900 bg-base-200 p-2"
+          >
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 border px-4 py-3 text-sm font-medium transition-colors ${
+                  activeTab === tab.id
+                    ? 'border-teal-700 bg-base-100 text-gray-100'
+                    : 'border-transparent text-gray-300 hover:bg-base-300/50 hover:text-gray-100'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
 
-          {/* Content */}
-          <div className="flex-1 ">
-            {/* Recent Tracks */}
-            {activeTab === 'recent' && (
-              <div>
-                <h2 className="text-xl font-semibold px-6 border-b border-teal-900 border bg-base-200 py-4  sticky top-0 z-10">
-                  Recent Tracks
-                </h2>
-                <div className="bg-base-200  border-x border-b border-teal-900 h-84 overflow-y-auto">
-                  {recentTracks?.map((track, index) => (
-                    <div
-                      key={`recent-${index}`}
-                      className={`${
-                        track['@attr']?.nowplaying
-                          ? `flex items-center pt-5 px-2 bg-base-200 hover:bg-base-300/30 transition-colors duration-200 mx-5`
-                          : `flex items-center p-1 mx-5 bg-base-200 hover:bg-base-300/30 transition-colors duration-200`
-                      }
-                  ${
-                    index < recentTracks.length - 1
-                      ? 'border-b border-teal-900/50'
-                      : ''
-                  }`}
-                    >
-                      {track['@attr']?.nowplaying ? (
-                        <div className="pr-2">
-                          <img
-                            src={
-                              track.image?.[2]?.['#text'] ||
-                              '/default-avatar.png'
-                            }
-                            alt={track.name}
-                            className="w-28 h-28  object-cover border border-base-300 mx-auto mb-4"
-                          />
-                        </div>
-                      ) : (
-                        <div></div>
-                      )}
-                      <div className="flex-1 min-w-0 mr-4">
-                        <h3
-                          className={`${
-                            track['@attr']?.nowplaying
-                              ? `font-medium truncate text-gray-100 mb-1`
-                              : `font-medium truncate text-gray-100 mb-1 text-xs`
-                          } `}
-                        >
-                          {track.name}
-                        </h3>
-                        <p
-                          className={`${
-                            track['@attr']?.nowplaying
-                              ? `text-sm text-gray-300 truncate`
-                              : `text-xs text-gray-300 truncate`
-                          } `}
-                        >
-                          by {track.artist['#text']}
-                        </p>
-                        {track.album?.['#text'] && (
-                          <p className="text-xs text-gray-400 truncate">
-                            {track.album['#text']}
-                          </p>
-                        )}
-                      </div>
-                      <div className="shrink-0">
-                        {track['@attr']?.nowplaying ? (
-                          <div className="animate-pulse flex items-center text-green-500 bg-green-500/10 px-3 py-1 rounded-full">
-                            <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse" />
-                            <span className="text-sm font-medium">
-                              Now Playing
-                            </span>
-                          </div>
-                        ) : (
-                          <p className="text-sm text-gray-400">
-                            {moment(Number(track.date?.uts) * 1000).fromNow()}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+          <div role="tabpanel">
+            <Panel>
+              {activeCaption && (
+                <p className="border-b border-teal-900/50 px-5 py-3 text-xs text-gray-400">
+                  {activeCaption}
+                </p>
+              )}
 
-            {/* Top Tracks */}
-            {activeTab === 'toptracks' && (
-              <div>
-                <h2 className="text-xl font-semibold px-6 border-b border-teal-900 border bg-base-200 py-4  sticky top-0 z-10">
-                  Top Tracks (This Month)
-                </h2>
-                <div className="bg-base-200  border-x border-b border-teal-900 h-84 overflow-y-auto">
-                  {topTracks?.map((track, index) => (
-                    <div
-                      key={`top-track-${index}`}
-                      className={`flex items-center p-5 bg-base-200 hover:bg-base-300/30 transition-colors duration-200
-                  ${
-                    index < topTracks.length - 1
-                      ? 'border-b border-teal-900/50'
-                      : ''
-                  }`}
+              {activeTab === 'recent' && (
+                <ul>
+                  {olderTracks.map((track) => (
+                    <li
+                      key={`${track.date?.uts}-${track.name}`}
+                      className="flex items-center gap-3 border-b border-teal-900/50 px-5 py-2 transition-colors last:border-b-0 hover:bg-base-300/30"
                     >
-                      <div className="w-10 h-10 flex items-center justify-center bg-base-100  mr-5 text-sm font-medium shadow-sm">
-                        {index + 1}
-                      </div>
-                      <div className="flex-1 min-w-0 mr-4">
-                        <h3 className="font-medium text-gray-100 mb-1">
+                      <Cover
+                        src={realCover(
+                          track.image?.[1]?.['#text'] ||
+                            track.image?.[2]?.['#text']
+                        )}
+                        className="h-10 w-10 shrink-0"
+                      />
+                      <div
+                        className="min-w-0 flex-1"
+                        title={track.album?.['#text'] || undefined}
+                      >
+                        <p className="truncate text-sm font-medium text-gray-100">
                           {track.name}
-                        </h3>
-                        <p className="text-sm text-gray-300">
-                          {track.artist.name}
                         </p>
-                        <p className="text-xs text-gray-400">
-                          {Number.parseInt(track.playcount).toLocaleString()}{' '}
-                          plays
+                        <p className="truncate text-xs text-gray-300">
+                          {track.artist['#text']}
                         </p>
                       </div>
-                      <div className="shrink-0">
-                        <a
-                          href={`https://last.fm/music/${track.artist.name}`}
-                          className="btn btn-outline btn-error btn-sm hover:scale-105 transition-transform duration-200"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Visit
-                          <img
-                            src="/assets/lastfm.png"
-                            alt="Last.fm"
-                            className="w-4 h-4 ml-1"
-                          />
-                        </a>
-                      </div>
-                    </div>
+                      <p className="shrink-0 text-xs text-gray-400">
+                        {moment(Number(track.date?.uts) * 1000).fromNow()}
+                      </p>
+                    </li>
                   ))}
-                </div>
-              </div>
-            )}
+                </ul>
+              )}
 
-            {/* Top Artists */}
-            {activeTab === 'topartists' && (
-              <div>
-                <h2 className="text-xl font-semibold px-6 border-b border-teal-900 border bg-base-200 py-4  sticky top-0 z-10">
-                  Top Artists (This Month)
-                </h2>
-                <div className="bg-base-200  border-x border-b border-teal-900 h-84 overflow-y-auto">
-                  {topArtists?.map((artist, index) => (
-                    <div
-                      key={`top-artist-${index}`}
-                      className={`flex items-center p-5 bg-base-200 hover:bg-base-300/30 transition-colors duration-200
-                  ${
-                    index < topArtists.length - 1
-                      ? 'border-b border-teal-900/50'
-                      : ''
-                  }`}
-                    >
-                      <div className="w-10 h-10 flex items-center justify-center bg-base-100  mr-5 text-sm font-medium shadow-sm">
-                        {index + 1}
-                      </div>
-                      <div className="flex-1 min-w-0 mr-4">
-                        <h3 className="font-semibold text-gray-100 mb-1">
-                          {artist.name}
-                        </h3>
-                        <p className="text-sm text-gray-400">
-                          {Number.parseInt(artist.playcount).toLocaleString()}{' '}
-                          plays
-                        </p>
-                      </div>
-                      <div className="shrink-0">
-                        <a
-                          href={`https://last.fm/music/${artist.name}`}
-                          className="btn btn-outline btn-error btn-sm hover:scale-105 transition-transform duration-200"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Visit
-                          <img
-                            src="/assets/lastfm.png"
-                            alt="Last.fm"
-                            className="w-4 h-4 ml-1"
-                          />
-                        </a>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+              {activeTab === 'toptracks' && <RankedList items={trackItems} />}
+              {activeTab === 'topartists' && <RankedList items={artistItems} />}
+            </Panel>
           </div>
         </section>
       </main>
