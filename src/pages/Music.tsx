@@ -1,4 +1,4 @@
-import type { ComponentChildren, JSX } from 'preact';
+import type { ComponentChildren, TargetedKeyboardEvent } from 'preact';
 import { useRef, useState } from 'preact/hooks';
 import useSWR from 'swr';
 import Nav from '../components/Navigation';
@@ -188,7 +188,7 @@ export default function Music() {
   );
 
   // Arrow keys / Home / End move between tabs, as the tab pattern expects
-  function onTabKeyDown(event: JSX.TargetedKeyboardEvent<HTMLDivElement>) {
+  function onTabKeyDown(event: TargetedKeyboardEvent<HTMLDivElement>) {
     const current = TABS.findIndex((tab) => tab.id === activeTab);
     let next = current;
 
