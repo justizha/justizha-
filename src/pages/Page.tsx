@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router";
 
 export default function LastFmCallback() {
   const [searchParams] = useSearchParams();
@@ -10,10 +10,9 @@ export default function LastFmCallback() {
 
     if (token) {
       localStorage.setItem("lastfm_token", token);
-
-      navigate("/music");
+      navigate("/music", { replace: true });
     } else {
-      navigate("/login");
+      navigate("/", { replace: true });
     }
   }, [searchParams, navigate]);
 
