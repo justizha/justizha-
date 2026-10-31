@@ -68,13 +68,6 @@ export default function MainContent() {
           Blogs
         </Link>
 
-        <Link
-          href="/scanner"
-          className="btn btn-outline btn-primary w-full rounded-none text-lg"
-        >
-          Scanner
-        </Link>
-
         <Contact />
       </div>
     </section>
