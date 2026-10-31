@@ -1,8 +1,8 @@
-import { Link } from "react-router";
-import useSWR from "swr";
-import { getAllLastFmData } from "../service/lastfm";
-import type { LastFmAllData } from "../types/lastfm";
-import Contact from "./Contanct";
+import { Link } from 'wouter-preact';
+import useSWR from 'swr';
+import { getAllLastFmData } from '../service/lastfm';
+import type { LastFmAllData } from '../types/lastfm';
+import Contact from './Contanct';
 
 // Music row with what you last played underneath
 function MusicLink() {
@@ -16,11 +16,11 @@ function MusicLink() {
   );
 
   const latest = data?.recentTracks?.[0];
-  const isLive = Boolean(latest?.["@attr"]?.nowplaying);
+  const isLive = Boolean(latest?.['@attr']?.nowplaying);
 
   return (
     <Link
-      to="/music"
+      href="/music"
       className="btn btn-outline btn-accent h-auto w-full flex-col gap-1 rounded-none py-3 text-lg"
     >
       Music
@@ -39,8 +39,8 @@ function MusicLink() {
             />
           )}
           <span className="truncate">
-            {isLive ? "Now playing" : "Last played"}: {latest.name} by{" "}
-            {latest.artist["#text"]}
+            {isLive ? 'Now playing' : 'Last played'}: {latest.name} by{' '}
+            {latest.artist['#text']}
           </span>
         </span>
       )}
@@ -63,7 +63,7 @@ export default function MainContent() {
         <MusicLink />
 
         <Link
-          to="/blog"
+          href="/blog"
           className="btn btn-outline btn-accent w-full rounded-none text-lg"
         >
           Blogs

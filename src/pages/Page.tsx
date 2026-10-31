@@ -1,12 +1,12 @@
-import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router";
+import { useEffect } from "preact/hooks";
+import { useLocation, useSearch } from "wouter-preact";
 
 export default function LastFmCallback() {
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const search = useSearch(); // "token=abc123" (no leading "?")
+  const [, navigate] = useLocation();
 
   useEffect(() => {
-    const token = searchParams.get("token");
+    const token = new URLSearchParams(search).get("token");
 
     if (token) {
       localStorage.setItem("lastfm_token", token);
@@ -14,7 +14,7 @@ export default function LastFmCallback() {
     } else {
       navigate("/", { replace: true });
     }
-  }, [searchParams, navigate]);
+  }, [search, navigate]);
 
   return <p>Redirecting...</p>;
 }
