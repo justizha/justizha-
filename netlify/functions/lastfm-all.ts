@@ -102,7 +102,7 @@ export const handler: Handler = async (event) => {
       // and refreshes it in the background for up to 60 s more. This removes
       // the cold start and the 4 Last.fm calls from most requests.
       'Cache-Control': 'public, max-age=0, must-revalidate',
-      'Netlify-CDN-Cache-Control': 'public, max-age=15, stale-while-revalidate=60',
+      'Netlify-CDN-Cache-Control': 'public, max-age=10, stale-while-revalidate=30',
     },
     body: JSON.stringify({
       recentTracks: recent.status === 'fulfilled' ? (recent.value.recenttracks?.track ?? []).map(slimRecent) : [],
