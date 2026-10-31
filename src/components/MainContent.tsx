@@ -52,7 +52,6 @@ export default function MainContent() {
   return (
     <section className="grid place-items-center px-8 pb-10">
       <div className="relative mt-6 grid w-full gap-3 sm:w-lg">
-        {/* Sleeping on the top edge of the first row; tweak -top-8 / right-3 to taste */}
         <img
           loading="lazy"
           src="/assets/catsleep.gif"
@@ -67,6 +66,13 @@ export default function MainContent() {
           className="btn btn-outline btn-accent w-full rounded-none text-lg"
         >
           Blogs
+        </Link>
+
+        <Link
+          href="/scanner"
+          className="btn btn-outline btn-primary w-full rounded-none text-lg"
+        >
+          Scanner
         </Link>
 
         <Contact />
