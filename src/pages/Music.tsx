@@ -1,9 +1,5 @@
-import {
-  type KeyboardEvent,
-  type ReactNode,
-  useRef,
-  useState,
-} from 'react';
+import type { ComponentChildren, JSX } from 'preact';
+import { useRef, useState } from 'preact/hooks';
 import useSWR from 'swr';
 import Nav from '../components/Navigation';
 import { getAllLastFmData } from '../service/lastfm';
@@ -39,7 +35,8 @@ function timeAgo(uts?: string) {
   if (!uts || Number.isNaN(ms)) return '';
   const diff = Math.round((ms - Date.now()) / 1000);
   for (const [unit, secs] of UNITS) {
-    if (Math.abs(diff) >= secs) return RTF.format(Math.round(diff / secs), unit);
+    if (Math.abs(diff) >= secs)
+      return RTF.format(Math.round(diff / secs), unit);
   }
   return 'just now';
 }
@@ -85,18 +82,21 @@ function Cover({
 }
 
 // Scroll area with a fade at the bottom edge
-function Panel({ children }: { children: ReactNode }) {
+function Panel({ children }: { children: ComponentChildren }) {
   return (
     <div className="max-h-112 overflow-y-auto border border-teal-900 bg-base-200">
       <div className="pb-8">{children}</div>
-      <div className="pointer-events-none sticky bottom-0 h-0" aria-hidden="true">
+      <div
+        className="pointer-events-none sticky bottom-0 h-0"
+        aria-hidden="true"
+      >
         <div className="absolute inset-x-0 bottom-0 h-8 bg-linear-to-t from-base-200 to-transparent" />
       </div>
     </div>
   );
 }
 
-function EmptyState({ children }: { children: ReactNode }) {
+function EmptyState({ children }: { children: ComponentChildren }) {
   return <p className="px-5 py-6 text-sm text-gray-400">{children}</p>;
 }
 
@@ -168,7 +168,9 @@ function MusicSkeleton() {
 
 export default function Music() {
   const [activeTab, setActiveTab] = useState<TabType>('recent');
-  const tabRefs = useRef<Partial<Record<TabType, HTMLButtonElement | null>>>({});
+  const tabRefs = useRef<Partial<Record<TabType, HTMLButtonElement | null>>>(
+    {}
+  );
 
   const username = import.meta.env.VITE_USER_NAME as string | undefined;
 
@@ -186,7 +188,7 @@ export default function Music() {
   );
 
   // Arrow keys / Home / End move between tabs, as the tab pattern expects
-  function onTabKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+  function onTabKeyDown(event: JSX.TargetedKeyboardEvent<HTMLDivElement>) {
     const current = TABS.findIndex((tab) => tab.id === activeTab);
     let next = current;
 
@@ -237,7 +239,7 @@ export default function Music() {
   const avatar = realCover(userInfo?.image?.[2]?.['#text']);
   const lastPlayed = timeAgo(latest?.date?.uts);
 
-  let body: ReactNode;
+  let body: ComponentChildren;
 
   if (!username) {
     body = (
@@ -315,7 +317,9 @@ export default function Music() {
                 <div key={stat.label} className="flex flex-col-reverse">
                   <dt className="text-xs text-gray-400">{stat.label}</dt>
                   <dd className="text-lg font-semibold text-gray-200 tabular-nums">
-                    {(Number.parseInt(stat.value || '0', 10) || 0).toLocaleString()}
+                    {(
+                      Number.parseInt(stat.value || '0', 10) || 0
+                    ).toLocaleString()}
                   </dd>
                 </div>
               ))}

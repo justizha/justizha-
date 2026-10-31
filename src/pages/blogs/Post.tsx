@@ -1,11 +1,13 @@
-import { lazy, Suspense } from "react";
-import { Link, useParams } from "react-router";
-import Nav from "../../components/Navigation";
-import { getPost } from "./posts";
+import { lazy, Suspense } from 'preact/compat';
+import { Link, useParams } from 'wouter-preact';
+import Nav from '../../components/Navigation';
+import { getPost } from './posts';
 
-const MarkdownBody = lazy(() => import("./MarkdownBody"));
+const MarkdownBody = lazy(() => import('./MarkdownBody'));
+
 export default function Post() {
-  const { slug } = useParams<{ slug: string }>();
+  const params = useParams<{ slug: string }>();
+  const slug = params.slug;
   const post = slug ? getPost(slug) : undefined;
 
   if (!post) {
@@ -16,7 +18,7 @@ export default function Post() {
           <h1 className="text-2xl font-bold text-gray-100">Post not found</h1>
           <p className="mt-2 text-gray-400">That post doesn't exist.</p>
           <Link
-            to="/blog"
+            href="/blog"
             className="mt-5 inline-block text-teal-300 hover:text-teal-200 hover:underline"
           >
             All posts
@@ -48,7 +50,7 @@ export default function Post() {
 
         <footer className="mt-10 border-t border-teal-900/50 pt-5 pb-4">
           <Link
-            to="/blog"
+            href="/blog"
             className="text-teal-300 hover:text-teal-200 hover:underline"
           >
             ← All posts

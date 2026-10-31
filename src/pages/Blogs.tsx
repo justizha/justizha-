@@ -1,6 +1,6 @@
-import { Link } from "react-router";
-import Nav from "../components/Navigation";
-import { posts } from "./blogs/posts";
+import { Link } from 'wouter-preact';
+import Nav from '../components/Navigation';
+import { posts } from './blogs/posts';
 
 export default function Blogs() {
   return (
@@ -27,7 +27,7 @@ export default function Blogs() {
                 className="border-b border-teal-900/50 last:border-b-0"
               >
                 <Link
-                  to={`/blog/${post.slug}`}
+                  href={`/blog/${post.slug}`}
                   className="group flex flex-col gap-1 px-5 py-4 transition-colors hover:bg-base-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-current sm:flex-row sm:gap-6"
                 >
                   <span className="w-24 shrink-0 pt-1 text-sm text-gray-400 tabular-nums">
