@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@netlify/functions": "^6.0.3",
     "@tailwindcss/vite": "^4.3.3",
     "daisyui": "^5.7.50",
     "preact": "^11.1.1",

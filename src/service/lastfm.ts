@@ -8,7 +8,9 @@ async function parse(res: Response): Promise<LastFmAllData> {
   return res.json();
 }
 
-export async function getAllLastFmData(username: string): Promise<LastFmAllData> {
+export async function getAllLastFmData(
+  username: string
+): Promise<LastFmAllData> {
   // Reuse the request index.html started before the JS loaded (once only,
   // so the 20 s polling always fetches fresh data)
   const early = (window as any).__lastfm as Promise<LastFmAllData> | undefined;
@@ -22,8 +24,6 @@ export async function getAllLastFmData(username: string): Promise<LastFmAllData>
   }
 
   return parse(
-    await fetch(
-      `/.netlify/functions/lastfm-all?user=${encodeURIComponent(username)}`
-    )
+    await fetch(`/api/lastfm-all?user=${encodeURIComponent(username)}`)
   );
 }
