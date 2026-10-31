@@ -1,8 +1,6 @@
 # Cat.
 
-<div align="center">
-  <img src="https://github.com/justizha/random_images/blob/main/cat.jpg?raw=true" alt="cat" width="450" loading="lazy">
-</div>
+![cat](https://raw.githubusercontent.com/justizha/random_images/main/cat.jpg)
 
 Meow, meow, meow, meow~
 
