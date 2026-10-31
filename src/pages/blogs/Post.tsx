@@ -3,9 +3,7 @@ import { Link, useParams } from "react-router";
 import Nav from "../../components/Navigation";
 import { getPost } from "./posts";
 
-// The markdown renderer is the heavy part, so it only loads once a post is opened
-const MarkdownPreview = lazy(() => import("@uiw/react-markdown-preview"));
-
+const MarkdownBody = lazy(() => import("./MarkdownBody"));
 export default function Post() {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getPost(slug) : undefined;
@@ -40,18 +38,11 @@ export default function Post() {
           </div>
         </header>
 
-        <article className="prose mt-6 max-w-none">
+        <article className="prose prose-invert mt-6 max-w-none">
           <Suspense
             fallback={<p className="text-sm text-gray-400">Loading post...</p>}
           >
-            <MarkdownPreview
-              source={post.body}
-              wrapperElement={{ "data-color-mode": "dark" }}
-              style={{
-                backgroundColor: "transparent",
-                fontFamily: "monospace",
-              }}
-            />
+            <MarkdownBody source={post.body} />
           </Suspense>
         </article>
 
